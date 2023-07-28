@@ -1,6 +1,5 @@
 package com.khopan.timetable;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,6 +18,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class TimetableService extends Service {
+	public static String LastCurrentSubjectText;
+
 	private Timer timer;
 
 	@Override

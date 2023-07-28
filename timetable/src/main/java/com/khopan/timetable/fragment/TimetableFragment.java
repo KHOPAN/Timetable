@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.VibrationAttributes;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.os.VibratorManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -24,6 +24,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.khopan.timetable.BaseFragment;
 import com.khopan.timetable.FragmentInfo;
 import com.khopan.timetable.TickRegistry;
+import com.khopan.timetable.TimetableApplication;
+import com.khopan.timetable.TimetableService;
 import com.khopan.timetable.data.Subject;
 import com.khopan.timetable.data.SubjectData;
 import com.khopan.timetable.data.SubjectDataList;
@@ -45,8 +47,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 
 	private Activity activity;
 	private long lastTime;
-	private String lastCurrentSubjectText;
-	private Notification notification;
+	private Vibrator vibrator;
 
 	private TextView currentSubjectView;
 	private TextView currentSubjectIdentifierView;
@@ -67,6 +68,12 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
 		this.activity = this.getActivity();
+		this.vibrator = this.activity.getSystemService(Vibrator.class);
+
+		if(!this.vibrator.hasVibrator()) {
+			this.vibrator = null;
+		}
+
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
 		Locale locale = Locale.getDefault();
 		TimetableFragment.TimeFormat = new SimpleDateFormat(preferences.getString("timeFormat", "HH:mm.ss"), locale);
@@ -90,32 +97,33 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 		this.previousSubjectTeacherView = view.findViewById(R.id.previousSubjectTeacherView);
 		this.previousSubjectTimezoneView = view.findViewById(R.id.previousSubjectTimezoneView);
 		this.initializeNotification();
-
-		NotificationManagerCompat manager = NotificationManagerCompat.from(this.context);
-		manager.notify(1523, this.notification);
-
 		TickRegistry.attach(this :: update);
 	}
 
 	private void initializeNotification() {
-		//Vibrator vibrator = this.getActivity().getSystemService(Vibrator.class);
-		//vibrator.vibrate(VibrationEffect.createWaveform(new long[] {0, 100, 100, 100, 100, 100, 0}, -1));
-		String channelName = "subjectNotification";
 		NotificationManager manager = this.getActivity().getSystemService(NotificationManager.class);
-		NotificationChannel channel = new NotificationChannel(channelName, "Subject Notification", NotificationManager.IMPORTANCE_HIGH);
+		NotificationChannel channel = new NotificationChannel("subjectNotification", "Subject Notification", NotificationManager.IMPORTANCE_HIGH);
 		channel.setShowBadge(false);
 		channel.enableLights(true);
 		channel.enableVibration(true);
 		channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 		manager.createNotificationChannel(channel);
-		NotificationCompat.Builder builder = new NotificationCompat.Builder(this.context, channelName)
-				.setContentTitle("Thai Language")
-				.setContentText("Current Subject\nThai Language\nIdentifier: T12345")
-				.setSmallIcon(R.drawable.ic_oui_education)
-				.setPriority(NotificationCompat.PRIORITY_MAX)
-				.setOngoing(true);
+	}
 
-		this.notification = builder.build();
+	public void notify(String title, String content) {
+		NotificationCompat.Builder builder = new NotificationCompat.Builder(this.context, "subjectNotification")
+				.setContentTitle(title)
+				.setStyle(new NotificationCompat.BigTextStyle().bigText(content))
+				.setContentIntent(PendingIntent.getActivity(context, 0, new Intent(context, TimetableApplication.class), PendingIntent.FLAG_IMMUTABLE))
+				.setSmallIcon(R.drawable.ic_oui_education)
+				.setPriority(NotificationCompat.PRIORITY_MAX);
+
+		NotificationManagerCompat manager = NotificationManagerCompat.from(this.context);
+		manager.notify(1523, builder.build());
+
+		if(this.vibrator != null) {
+			this.vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+		}
 	}
 
 	private void update() {
@@ -243,9 +251,23 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 		String currentSubjectIdentifierText = currentSubjectIdentifierBuilder.toString();
 		String currentSubjectTeacherText = currentSubjectTeacherBuilder.toString();
 		String currentSubjectTimezoneText = currentSubjectTimezoneBuilder.toString();
+		boolean notify;
+		String content;
 
-		if(currentSubjectText.equals(this.lastCurrentSubjectText)) {
-			this.lastCurrentSubjectText = currentSubjectText;
+		if(!currentSubjectText.equals(TimetableService.LastCurrentSubjectText)) {
+			TimetableService.LastCurrentSubjectText = currentSubjectText;
+			SeparatedStringBuilder builder = new SeparatedStringBuilder();
+			builder.setSeparateText("\n");
+			builder.appendRaw("Current Subject: ");
+			builder.append(currentSubjectText);
+			builder.append(currentSubjectIdentifierText);
+			builder.append(currentSubjectTeacherText);
+			builder.append(currentSubjectTimezoneText);
+			content = builder.toString();
+			notify = true;
+		} else {
+			content = "";
+			notify = false;
 		}
 
 		this.activity.runOnUiThread(() -> {
@@ -253,6 +275,10 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 			this.currentSubjectIdentifierView.setText(currentSubjectIdentifierText);
 			this.currentSubjectTeacherView.setText(currentSubjectTeacherText);
 			this.currentSubjectTimezoneView.setText(currentSubjectTimezoneText);
+
+			if(notify) {
+				this.notify(currentSubjectText, content);
+			}
 		});
 	}
 
