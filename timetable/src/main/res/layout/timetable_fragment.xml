@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:overScrollMode="always"
+    android:scrollbars="vertical"
+    tools:viewBindingIgnore="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <dev.oneuiproject.oneui.widget.Separator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/currentSubject" />
+
+        <dev.oneuiproject.oneui.widget.RoundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/oui_background_color"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp">
+            <TextView
+                android:id="@+id/currentSubjectView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:textSize="20sp"
+                android:textColor="@color/oui_primary_text_color"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+            <TextView
+                android:id="@+id/currentSubjectIdentifierView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+            <TextView
+                android:id="@+id/currentSubjectTeacherView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+            <TextView
+                android:id="@+id/currentSubjectTimezoneView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+        </dev.oneuiproject.oneui.widget.RoundLinearLayout>
+        <dev.oneuiproject.oneui.widget.Separator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/time" />
+
+        <dev.oneuiproject.oneui.widget.RoundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/oui_background_color"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp">
+            <TextView
+                android:id="@+id/timeView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:textSize="20sp"
+                android:textColor="@color/oui_primary_text_color"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+            <TextView
+                android:id="@+id/dateView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+        </dev.oneuiproject.oneui.widget.RoundLinearLayout>
+        <dev.oneuiproject.oneui.widget.Separator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nextSubject" />
+
+        <dev.oneuiproject.oneui.widget.RoundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/oui_background_color"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp">
+            <TextView
+                android:id="@+id/nextSubjectView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:textColor="@color/oui_primary_text_color"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+            <TextView
+                android:id="@+id/nextSubjectIdentifierView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+            <TextView
+                android:id="@+id/nextSubjectTeacherView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+            <TextView
+                android:id="@+id/nextSubjectTimezoneView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+        </dev.oneuiproject.oneui.widget.RoundLinearLayout>
+        <dev.oneuiproject.oneui.widget.Separator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/previousSubject" />
+
+        <dev.oneuiproject.oneui.widget.RoundLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/oui_background_color"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp">
+            <TextView
+                android:id="@+id/previousSubjectView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:textColor="@color/oui_primary_text_color"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+            <TextView
+                android:id="@+id/previousSubjectIdentifierView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+            <TextView
+                android:id="@+id/previousSubjectTeacherView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+            <TextView
+                android:id="@+id/previousSubjectTimezoneView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholderText"
+                android:gravity="center"
+                android:layout_marginVertical="10sp" />
+
+        </dev.oneuiproject.oneui.widget.RoundLinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

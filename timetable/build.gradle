@@ -1,0 +1,54 @@
+plugins {
+    id 'com.android.application'
+}
+
+configurations.all {
+    exclude group: 'androidx.appcompat', module: 'appcompat'
+    exclude group: 'androidx.core', module: 'core'
+}
+
+android {
+    compileSdk target_sdk
+
+    defaultConfig {
+        applicationId "com.sec.sesl.khopan.timetable"
+        minSdk 26
+        targetSdk target_sdk
+        versionCode version_code
+        versionName version_name
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    buildFeatures {
+        buildConfig true
+        viewBinding true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation("io.github.oneuiproject.sesl:appcompat:$sesl_appcompat_version")
+    implementation("io.github.oneuiproject.sesl:material:$sesl_material_version")
+    implementation("io.github.oneuiproject.sesl:picker-basic:$sesl_picker_basic_version")
+    implementation("io.github.oneuiproject.sesl:picker-color:$sesl_picker_color_version")
+    implementation("io.github.oneuiproject.sesl:preference:$sesl_preference_version")
+    implementation("io.github.oneuiproject.sesl:recyclerview:$sesl_recyclerview_version")
+    implementation("androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version")
+    implementation("com.airbnb.android:lottie:5.2.0")
+    implementation("io.github.oneuiproject:icons:1.1.0")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.2")
+    implementation project(path: ":lib")
+}

@@ -1,0 +1,63 @@
+buildscript {
+    apply from: 'manifest.gradle'
+
+    repositories {
+        google()
+        mavenCentral()
+
+        maven {
+            url 'https://jitpack.io'
+        }
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.1'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenLocal()
+        mavenCentral()
+
+        maven {
+            url 'https://jitpack.io'
+        }
+    }
+
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+        options.addStringOption('encoding', 'UTF-8')
+        options.addStringOption('charSet', 'UTF-8')
+    }
+}
+
+subprojects {
+    afterEvaluate {
+        if(!plugins.hasPlugin('signing')) {
+            return
+        }
+
+        android {
+            publishing {
+                singleVariant("release") {
+                    withSourcesJar()
+                    withJavadocJar()
+                }
+            }
+        }
+
+        signing {
+            def signingKeyId = System.getenv("SIGNING_KEYID")
+            def signingKey = System.getenv("SIGNING_PRIVATE_KEY")
+            def signingPassword = System.getenv("SIGNING_PASSWORD")
+            useInMemoryPgpKeys(signingKeyId, signingKey, signingPassword)
+            sign publishing.publications
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
