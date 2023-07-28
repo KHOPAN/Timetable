@@ -10,11 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.preference.Preference;
-import androidx.preference.PreferenceCategory;
-import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
-import androidx.preference.PreferenceScreen;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,29 +29,6 @@ public class EpisodeFragment extends Fragment {
 		super.onAttach(context);
 		this.context = context;
 	}
-
-	/*@Override
-	public void onCreatePreferences(Bundle bundle, String rootKey) {
-		bundle = this.getArguments();
-		JsonNode node = null;
-
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			node = mapper.readTree(bundle.getString("episode"));
-		} catch(Throwable ignored) {
-			Toast.makeText(this.context, "Error while parsing JSON", Toast.LENGTH_SHORT).show();
-		}
-
-		Episode episode = Episode.deserialize(node);
-		PreferenceManager manager = this.getPreferenceManager();
-		PreferenceScreen screen = manager.createPreferenceScreen(this.context);
-		PreferenceCategory contentCategory = new PreferenceCategory(this.context);
-		screen.addPreference(contentCategory);
-		Preference contentPreference = new Preference(this.context);
-		contentPreference.setTitle(episode.content().get());
-		contentCategory.addPreference(contentPreference);
-		this.setPreferenceScreen(screen);
-	}*/
 
 	@Nullable
 	@Override
