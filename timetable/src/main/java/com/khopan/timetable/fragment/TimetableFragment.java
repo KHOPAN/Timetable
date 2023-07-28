@@ -211,6 +211,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 		currentSubjectIdentifierBuilder.appendRaw("Identifier: ");
 		currentSubjectTeacherBuilder.appendRaw("Teacher: ");
 		currentSubjectTimezoneBuilder.appendRaw("Timezone: ");
+		boolean none = false;
 
 		if(size > 0) {
 			for(Subject subjectEntry : subjectList) {
@@ -244,6 +245,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 				currentSubjectTimezoneBuilder.append(this.time(subjectEntry));
 			}
 		} else {
+			none = true;
 			this.none(currentSubjectBuilder, currentSubjectIdentifierBuilder, currentSubjectTeacherBuilder, currentSubjectTimezoneBuilder);
 		}
 
@@ -264,7 +266,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 			builder.append(currentSubjectTeacherText);
 			builder.append(currentSubjectTimezoneText);
 			content = builder.toString();
-			notify = true;
+			notify = !none;
 		} else {
 			content = "";
 			notify = false;
