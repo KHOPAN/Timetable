@@ -2,7 +2,6 @@ package com.khopan.timetable.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,11 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
-import androidx.preference.EditTextPreferenceDialogFragmentCompat;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceDataStore;
-import androidx.preference.PreferenceDialogFragmentCompat;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
@@ -29,6 +26,7 @@ import com.khopan.timetable.activity.SyncTimetableActivity;
 import com.khopan.timetable.secret.SecretKeyProcessor;
 import com.khopan.timetable.utils.ThemeUtils;
 import com.khopan.timetable.widgets.EditDateFormatPreference;
+import com.sec.sesl.khopan.timetable.BuildConfig;
 import com.sec.sesl.khopan.timetable.R;
 
 import dev.oneuiproject.oneui.preference.HorizontalRadioPreference;
@@ -39,6 +37,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 	private Resources resources;
 
 	private String secretKeyValue;
+	private long lastPressTime;
+	private int pressCount;
 
 	@Override
 	public void onCreatePreferences(Bundle bundle, String rootKey) {
@@ -174,6 +174,33 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 		secretKeyPreference.setSummary(enterSecretKeys);
 		secretKeyPreference.setDialogTitle(enterSecretKeys);
 		secretCategory.addPreference(secretKeyPreference);
+		secretCategory.setVisible(false);
+		PreferenceCategory versionCategory = new PreferenceCategory(this.context);
+		screen.addPreference(versionCategory);
+		Preference versionPreference = new Preference(this.context);
+		versionPreference.setTitle("Version " + BuildConfig.VERSION_NAME);
+		versionPreference.setSummary("Build " + BuildConfig.BUILD_NUMBER);
+		versionPreference.setOnPreferenceClickListener(preference -> {
+			long time = System.currentTimeMillis();
+
+			if(this.pressCount == 0) {
+				this.lastPressTime = time;
+				this.pressCount++;
+			} else if(time - this.lastPressTime >= 1000) {
+				this.pressCount = 0;
+			} else {
+				this.pressCount++;
+			}
+
+			if(this.pressCount >= 4) {
+				this.pressCount = 0;
+				secretCategory.setVisible(true);
+			}
+
+			return true;
+		});
+
+		versionCategory.addPreference(versionPreference);
 		this.setPreferenceScreen(screen);
 	}
 
