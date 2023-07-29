@@ -15,7 +15,6 @@
         android:icon="@mipmap/launcher_icon"
         android:roundIcon="@mipmap/launcher_icon"
         android:theme="@style/OneUITheme">
-
         <meta-data
             android:name="SamsungBasicInteraction"
             android:value="SEP10" />
@@ -60,6 +59,17 @@
             android:name="com.khopan.timetable.activity.SyncTimetableActivity"
             android:exported="true" />
 
+        <receiver
+            android:name="com.khopan.timetable.appwidget.TimetableWidgetProvider"
+            android:exported="false">
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/timetable_widget" />
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+        </receiver>
         <service
             android:name="com.khopan.timetable.TimetableService"
             android:exported="false" />

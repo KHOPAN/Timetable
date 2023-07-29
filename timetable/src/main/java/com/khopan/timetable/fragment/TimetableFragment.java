@@ -1,10 +1,13 @@
 package com.khopan.timetable.fragment;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,6 +30,7 @@ import com.khopan.timetable.FragmentInfo;
 import com.khopan.timetable.TickRegistry;
 import com.khopan.timetable.TimetableApplication;
 import com.khopan.timetable.TimetableService;
+import com.khopan.timetable.appwidget.TimetableWidgetProvider;
 import com.khopan.timetable.data.Subject;
 import com.khopan.timetable.data.SubjectData;
 import com.khopan.timetable.data.SubjectDataList;
@@ -224,12 +228,6 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 		SeparatedStringBuilder currentSubjectIdentifierBuilder = new SeparatedStringBuilder();
 		SeparatedStringBuilder currentSubjectTeacherBuilder = new SeparatedStringBuilder();
 		SeparatedStringBuilder currentSubjectTimezoneBuilder = new SeparatedStringBuilder();
-		currentSubjectIdentifierBuilder.appendRaw(this.resources.getString(R.string.identifier));
-		currentSubjectIdentifierBuilder.appendRaw(": ");
-		currentSubjectTeacherBuilder.appendRaw(this.resources.getString(R.string.teacher));
-		currentSubjectTeacherBuilder.appendRaw(": ");
-		currentSubjectTimezoneBuilder.appendRaw(this.resources.getString(R.string.timezone));
-		currentSubjectTimezoneBuilder.appendRaw(": ");
 		boolean none = false;
 
 		if(size > 0) {
@@ -269,9 +267,9 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 		}
 
 		String currentSubjectText = currentSubjectBuilder.toString();
-		String currentSubjectIdentifierText = currentSubjectIdentifierBuilder.toString();
-		String currentSubjectTeacherText = currentSubjectTeacherBuilder.toString();
-		String currentSubjectTimezoneText = currentSubjectTimezoneBuilder.toString();
+		String currentSubjectIdentifierText = this.resources.getString(R.string.identifier) + ": " + currentSubjectIdentifierBuilder;
+		String currentSubjectTeacherText = this.resources.getString(R.string.teacher) + ": " + currentSubjectTeacherBuilder;
+		String currentSubjectTimezoneText = this.resources.getString(R.string.timezone) + ": " + currentSubjectTimezoneBuilder;
 		boolean notify;
 		String content;
 
@@ -300,6 +298,17 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 
 			if(notify) {
 				this.notify(currentSubjectText, content);
+			}
+
+			if(!currentSubjectText.equals(TimetableWidgetProvider.CurrentSubject) || !currentSubjectIdentifierBuilder.toString().equals(TimetableWidgetProvider.CurrentSubjectIdentifier) || !currentSubjectTeacherBuilder.toString().equals(TimetableWidgetProvider.CurrentSubjectTeacher) || !currentSubjectTimezoneBuilder.toString().equals(TimetableWidgetProvider.CurrentSubjectTimezone)) {
+				TimetableWidgetProvider.CurrentSubject = currentSubjectText;
+				TimetableWidgetProvider.CurrentSubjectIdentifier = currentSubjectIdentifierBuilder.toString();
+				TimetableWidgetProvider.CurrentSubjectTeacher = currentSubjectTeacherBuilder.toString();
+				TimetableWidgetProvider.CurrentSubjectTimezone = currentSubjectTimezoneBuilder.toString();
+				Application application = this.activity.getApplication();
+				int[] identifiers = AppWidgetManager.getInstance(application).getAppWidgetIds(new ComponentName(application, TimetableWidgetProvider.class));
+				TimetableWidgetProvider widget = new TimetableWidgetProvider();
+				widget.onUpdate(this.activity, AppWidgetManager.getInstance(this.activity), identifiers);
 			}
 		});
 	}
