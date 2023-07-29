@@ -3,7 +3,6 @@ package com.khopan.timetable.appwidget;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.sec.sesl.khopan.timetable.R;
