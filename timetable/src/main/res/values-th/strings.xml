@@ -1,0 +1,84 @@
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
+    <!-- Application Information -->
+    <string name="app_name">ตารางเรียน</string>
+    <!-- End Application Information -->
+
+    <!-- Service -->
+    <string name="runningInTheBackground">ตารางเรียนทำงานอยู่ในเบื้องหลัง</string>
+    <!-- End Service -->
+
+    <!-- Notification -->
+    <string name="serviceNotification">แจ้งเตือนการทำงานในเบื้องหลัง</string>
+    <string name="subjectNotification">แจ้งเตือนวิชาเรียน</string>
+    <!-- End Notification -->
+
+    <!-- Subject Fragment -->
+    <string name="timetable">ตารางเรียน</string>
+    <string name="noneText">ไม่มี</string>
+    <string name="currentSubject">วิชาปัจจุบัน</string>
+    <string name="time">เวลา</string>
+    <string name="nextSubject">วิชาต่อไป</string>
+    <string name="previousSubject">วิชาก่อนหน้า</string>
+    <string name="identifier">รหัสวิชา</string>
+    <string name="teacher">ครูผู้สอน</string>
+    <string name="timezone">ช่วงเวลา</string>
+    <!-- End Subject Fragment -->
+
+    <!-- Settings Fragment -->
+    <string name="settings">การตั้งค่า</string>
+    <string name="timeFormat">รูปแบบเวลา</string>
+    <string name="dateFormat">รูปแบบวันที่</string>
+    <string name="theme">ธีม</string>
+    <string name="themeSettings">การตั้งค่าธีม</string>
+    <string name="lightTheme">สว่าง</string>
+    <string name="darkTheme">มืด</string>
+    <string name="defaultTheme">ตามระบบ</string>
+    <string name="syncTimetable">ซิงค์ข้อมูลตารางเรียน</string>
+    <string name="fetchGitHub">กำลังดึงข้อมูลจาก GitHub</string>
+    <string name="errorFetching">เกิดข้อผิดพลาดขณะดึงข้อมูลจาก GitHub</string>
+    <string name="missingTimeProfile">คำเตือน: ไม่มี TimeProfile, ใช้ค่าเริ่มต้น</string>
+    <string name="syncSuccess">ซิงค์ข้อมูลตารางเรียนสำเร็จ</string>
+    <string name="update">อัพเดต</string>
+    <string name="clearTimetable">ล้างข้อมูลตารางเรียน</string>
+    <string name="clearSuccess">ล้างข้อมูลตารางเรียนสำเร็จ</string>
+    <string name="secretKeyTitle">คีย์ลับ</string>
+    <string name="enterSecretKeys">ใส่คีย์ลับ</string>
+    <string name="invalidKey">คีย์ไม่ถูกต้อง</string>
+    <string name="secret">ความลับ</string>
+    <string name="processingSecretError">เกิดข้อผิดพลาดขณะประมวลผลคีย์ลับ</string>
+    <string name="nullResponseGitHub">ข้อผิดพลาด: การตอบกลับจาก GitHub เป็น Null</string>
+    <string name="parsingJSONError">เกิดข้อผิดพลาดขณะประมวล JSON</string>
+    <!-- End Settings Fragment -->
+
+    <!-- Edit Timetable Fragment -->
+    <string name="editTimetable">แก้ไขตารางเรียน</string>
+    <string name="sunday">วันอาทิตย์</string>
+    <string name="monday">วันจันทร์</string>
+    <string name="tuesday">วันอังคาร</string>
+    <string name="wednesday">วันพุธ</string>
+    <string name="thursday">วันพฤหัสบดี</string>
+    <string name="friday">วันศุกร์</string>
+    <string name="saturday">วันเสาร์</string>
+    <string name="addSubject">เพิ่มวิชา</string>
+    <string name="removeSubject">ลบวิชา</string>
+    <string name="nullSubjectListError">ข้อผิดพลาดภายใน: SubjectList = Null</string>
+    <string name="emptySubjectError">ข้อผิดพลาด: ไม่มีวิชา</string>
+    <string name="subject">วิชา</string>
+    <string name="startTime">เวลาเริ่ม</string>
+    <string name="endTime">เวลาจบ</string>
+    <string name="done">ตกลง</string>
+    <string name="cancel">ยกเลิก</string>
+    <!-- End Edit Timetable Fragment -->
+
+    <!-- Edit Subject Fragment -->
+    <string name="editSubject">แก้ไขวิชา</string>
+    <string name="subjectName">ชื่อวิชา</string>
+    <string name="subjectIdentifier">รหัสวิชา</string>
+    <string name="teachers">ครูผู้สอน</string>
+    <string name="addTeacher">เพิ่มครูผู้สอน</string>
+    <string name="removeTeacher">ลบครูผู้สอน</string>
+    <string name="teacherName">ชื่อครูผู้สอน</string>
+    <!-- End Edit Subject Fragment -->
+</resources>
