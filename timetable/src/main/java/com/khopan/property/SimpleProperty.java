@@ -3,11 +3,11 @@ package com.khopan.property;
 public class SimpleProperty<T, R> implements  Property<T, R> {
 	private final Getter<T> getter;
 	private final SimpleSetter<T> setter;
+	private final R returner;
 	private Updater<T> updater;
 	private boolean isSet;
 	private boolean nullable;
 	private T nullSafety;
-	private R returner;
 
 	public SimpleProperty(Getter<T> getter, SimpleSetter<T> setter, R returner) {
 		this(getter, setter, null, returner);

@@ -26,11 +26,11 @@ public class Season {
 	}
 
 	public Property<String, Season> title() {
-		return new SimpleProperty<String, Season>(() -> this.title, title -> this.title = title, this).nullable().whenNull("");
+		return new SimpleProperty<>(() -> this.title, title -> this.title = title, this).nullable().whenNull("");
 	}
 
 	public Property<String, Season> name() {
-		return new SimpleProperty<String, Season>(() -> this.name, name -> this.name = name, this).nullable().whenNull("");
+		return new SimpleProperty<>(() -> this.name, name -> this.name = name, this).nullable().whenNull("");
 	}
 
 	public Season addAdditionalInformation(String additionalInformation) {
@@ -126,13 +126,13 @@ public class Season {
 		}
 
 		if(node.has("episode")) {
-			for(JsonNode episode : (ArrayNode) node.get("episode")) {
+			for(JsonNode episode : node.get("episode")) {
 				season.episodeList.add(Episode.deserialize(episode));
 			}
 		}
 
 		if(node.has("additional-information")) {
-			for(JsonNode information : (ArrayNode) node.get("additional-information")) {
+			for(JsonNode information : node.get("additional-information")) {
 				season.additionalInformationList.add(information.asText());
 			}
 		}

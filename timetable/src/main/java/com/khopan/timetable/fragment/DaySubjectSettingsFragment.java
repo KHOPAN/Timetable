@@ -23,11 +23,12 @@ import com.khopan.timetable.data.SubjectData;
 import com.khopan.timetable.data.SubjectDataList;
 import com.khopan.timetable.settings.FragmentSettingsActivity;
 
+import java.util.Locale;
+
 import dev.oneuiproject.oneui.widget.Toast;
 
 public class DaySubjectSettingsFragment extends PreferenceFragmentCompat {
 	private Context context;
-	private SharedPreferences preferences;
 	private int startTimeHour;
 	private int startTimeMinute;
 	private int endTimeHour;
@@ -43,11 +44,11 @@ public class DaySubjectSettingsFragment extends PreferenceFragmentCompat {
 
 	@Override
 	public void onCreatePreferences(Bundle bundle, String rootKey) {
-		this.preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
 		SubjectData[] dataList = null;
 
-		if(this.preferences.contains("subjectList")) {
-			String subject = this.preferences.getString("subjectList", "");
+		if(preferences.contains("subjectList")) {
+			String subject = preferences.getString("subjectList", "");
 
 			if(subject != null && !subject.isEmpty()) {
 				try {
@@ -65,7 +66,7 @@ public class DaySubjectSettingsFragment extends PreferenceFragmentCompat {
 
 		if(dataList == null || dataList.length == 0) {
 			Toast.makeText(this.context, "Error: Empty Subject", Toast.LENGTH_SHORT).show();
-			this.getActivity().finish();
+			this.requireActivity().finish();
 			return;
 		}
 
@@ -105,7 +106,7 @@ public class DaySubjectSettingsFragment extends PreferenceFragmentCompat {
 		startTimePickerPreference.setTitle("Start Time");
 		startTimePickerPreference.setSummary("00:00");
 		SeslTimePickerDialog startTimePicker = new SeslTimePickerDialog(this.context, (view, hour, minute) -> {
-			startTimePickerPreference.setSummary(String.format("%02d:%02d", hour, minute));
+			startTimePickerPreference.setSummary(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
 			this.startTimeHour = hour;
 			this.startTimeMinute = minute;
 		}, 0, 0, true);
@@ -120,7 +121,7 @@ public class DaySubjectSettingsFragment extends PreferenceFragmentCompat {
 		endTimePickerPreference.setTitle("End Time");
 		endTimePickerPreference.setSummary("00:00");
 		SeslTimePickerDialog endTimePicker = new SeslTimePickerDialog(this.context, (view, hour, minute) -> {
-			endTimePickerPreference.setSummary(String.format("%02d:%02d", hour, minute));
+			endTimePickerPreference.setSummary(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
 			this.endTimeHour = hour;
 			this.endTimeMinute = minute;
 		}, 0, 0, true);

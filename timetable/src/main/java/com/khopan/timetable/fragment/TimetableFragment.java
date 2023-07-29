@@ -67,7 +67,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 	@Override
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
-		this.activity = this.getActivity();
+		this.activity = this.requireActivity();
 		this.vibrator = this.activity.getSystemService(Vibrator.class);
 
 		if(!this.vibrator.hasVibrator()) {
@@ -101,7 +101,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 	}
 
 	private void initializeNotification() {
-		NotificationManager manager = this.getActivity().getSystemService(NotificationManager.class);
+		NotificationManager manager = this.activity.getSystemService(NotificationManager.class);
 		NotificationChannel channel = new NotificationChannel("subjectNotification", "Subject Notification", NotificationManager.IMPORTANCE_HIGH);
 		channel.setShowBadge(false);
 		channel.enableLights(true);
@@ -151,7 +151,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 			if(time - this.lastTime >= 1000) {
 				this.lastTime = time;
 				int day = calendar.get(Calendar.DAY_OF_WEEK);
-				String key = new String[] {"", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturdy"}[day];
+				String key = new String[] {"", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"}[day];
 				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
 				String subjectData = preferences.getString("subjectList", "");
 

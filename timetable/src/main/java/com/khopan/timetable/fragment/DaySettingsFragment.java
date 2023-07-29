@@ -10,7 +10,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
 import androidx.preference.MultiSelectListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
@@ -77,6 +76,11 @@ public class DaySettingsFragment extends PreferenceFragmentCompat {
 	@Override
 	public void onCreatePreferences(Bundle bundle, String rootKey) {
 		Bundle arguments = this.getArguments();
+
+		if(arguments == null) {
+			throw new NullPointerException("Arguments cannot be null");
+		}
+
 		String dayName = arguments.getString("dayName");
 		this.dayIdentifier = arguments.getString("dayIdentifier");
 		this.enableAddingData = true;

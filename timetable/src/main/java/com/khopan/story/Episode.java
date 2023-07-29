@@ -1,8 +1,5 @@
 package com.khopan.story;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,40 +23,39 @@ public class Episode {
 	}
 
 	public Property<String, Episode> title() {
-		return new SimpleProperty<String, Episode>(() -> this.title, title -> this.title = title, this).nullable().whenNull("");
+		return new SimpleProperty<>(() -> this.title, title -> this.title = title, this).nullable().whenNull("");
 	}
 
 	public Property<String, Episode> name() {
-		return new SimpleProperty<String, Episode>(() -> this.name, name -> this.name = name, this).nullable().whenNull("");
+		return new SimpleProperty<>(() -> this.name, name -> this.name = name, this).nullable().whenNull("");
 	}
 
 	public Property<String, Episode> content() {
-		return new SimpleProperty<String, Episode>(() -> this.content, content -> this.content = content, this).nullable().whenNull("");
+		return new SimpleProperty<>(() -> this.content, content -> this.content = content, this).nullable().whenNull("");
 	}
 
 	public Episode format() {
 		String[] words = this.content.split("\\s+");
-		String lineBuffer = "";
+		StringBuilder lineBuffer = new StringBuilder();
 		String lastWord = null;
 
-		for(int i = 0; i < words.length; i++) {
-
+		for(String word : words) {
 			if(lastWord == null) {
-				lineBuffer += words[i];
-				lastWord = words[i];
+				lineBuffer.append(word);
 			} else {
 				String space = " ";
 
-				if(!this.isASCII(lastWord, false) && !this.isASCII(words[i], true)) {
+				if(this.isASCII(lastWord, false) && this.isASCII(word, true)) {
 					space = "";
 				}
 
-				lineBuffer += space + words[i];
-				lastWord = words[i];
+				lineBuffer.append(space).append(word);
 			}
+
+			lastWord = word;
 		}
 
-		this.content = lineBuffer;
+		this.content = lineBuffer.toString();
 		return this;
 	}
 
@@ -87,7 +83,7 @@ public class Episode {
 	}
 
 	private boolean isASCII(String text, boolean first) {
-		return ((int) (first ? text.charAt(0) : text.charAt(text.length() - 1))) < 128;
+		return ((int) (first ? text.charAt(0) : text.charAt(text.length() - 1))) >= 128;
 	}
 
 	public static Episode getInstance() {
@@ -137,7 +133,7 @@ public class Episode {
 		}
 
 		if(node.has("additional-information")) {
-			for(JsonNode information : (ArrayNode) node.get("additional-information")) {
+			for(JsonNode information : node.get("additional-information")) {
 				episode.additionalInformationList.add(information.asText());
 			}
 		}

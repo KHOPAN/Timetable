@@ -35,6 +35,11 @@ public class StoryFragment extends PreferenceFragmentCompat {
 	@Override
 	public void onCreatePreferences(Bundle bundle, String rootKey) {
 		bundle = this.getArguments();
+
+		if(bundle == null) {
+			throw new NullPointerException("Arguments cannot be null");
+		}
+
 		JsonNode node = null;
 
 		try {

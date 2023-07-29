@@ -40,6 +40,11 @@ public class EpisodeFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle bundle) {
 		super.onViewCreated(view, bundle);
 		bundle = this.getArguments();
+
+		if(bundle == null) {
+			throw new NullPointerException("Arguments cannot be null");
+		}
+
 		JsonNode node = null;
 
 		try {

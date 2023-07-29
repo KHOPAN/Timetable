@@ -1,6 +1,5 @@
 package com.khopan.timetable.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.TypedValue;
@@ -8,7 +7,6 @@ import android.util.TypedValue;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.preference.PreferenceManager;
 
 import com.sec.sesl.khopan.timetable.R;
 

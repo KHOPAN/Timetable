@@ -3,7 +3,7 @@ package com.khopan.timetable.utils;
 import androidx.annotation.NonNull;
 
 public class SeparatedStringBuilder {
-	private StringBuilder builder;
+	private final StringBuilder builder;
 
 	private String separateText;
 	private boolean appended;
@@ -70,7 +70,7 @@ public class SeparatedStringBuilder {
 				this.builder.append('[');
 
 			}
-			this.builder.append(builder.toString());
+			this.builder.append(builder);
 
 			if(this.addBrace) {
 				this.builder.append(']');

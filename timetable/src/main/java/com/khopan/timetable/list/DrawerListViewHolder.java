@@ -14,46 +14,46 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.sec.sesl.khopan.timetable.R;
 
 public class DrawerListViewHolder extends RecyclerView.ViewHolder {
-    private final boolean mIsSeparator;
-    private Typeface mNormalTypeface;
-    private Typeface mSelectedTypeface;
+    private final boolean separator;
 
-    private AppCompatImageView mIconView;
-    private TextView mTitleView;
+    private Typeface normalTypeface;
+    private Typeface selectedTypeface;
+    private AppCompatImageView iconView;
+    private TextView titleView;
 
-    public DrawerListViewHolder(@NonNull View itemView, boolean isSeparator) {
+    public DrawerListViewHolder(@NonNull View itemView, boolean separator) {
         super(itemView);
-        mIsSeparator = isSeparator;
-        if (!mIsSeparator) {
-            mIconView = itemView.findViewById(R.id.drawer_item_icon);
-            mTitleView = itemView.findViewById(R.id.drawer_item_title);
-            mNormalTypeface = Typeface.create("sec-roboto-light", Typeface.NORMAL);
-            mSelectedTypeface = Typeface.create("sec-roboto-light", Typeface.BOLD);
+        this.separator = separator;
+
+        if(!this.separator) {
+            this.iconView = itemView.findViewById(R.id.drawer_item_icon);
+            this.titleView = itemView.findViewById(R.id.drawer_item_title);
+            this.normalTypeface = Typeface.create("sec-roboto-light", Typeface.NORMAL);
+            this.selectedTypeface = Typeface.create("sec-roboto-light", Typeface.BOLD);
         }
     }
 
     public boolean isSeparator() {
-        return mIsSeparator;
+        return this.separator;
     }
 
     public void setIcon(@DrawableRes int resId) {
-        if (!mIsSeparator) {
-            mIconView.setImageResource(resId);
+        if(!this.separator) {
+            this.iconView.setImageResource(resId);
         }
     }
 
     public void setTitle(@Nullable CharSequence title) {
-        if (!mIsSeparator) {
-            mTitleView.setText(title);
+        if(!this.separator) {
+            this.titleView.setText(title);
         }
     }
 
     public void setSelected(boolean selected) {
-        if (!mIsSeparator) {
-            itemView.setSelected(selected);
-            mTitleView.setTypeface(selected ? mSelectedTypeface : mNormalTypeface);
-            mTitleView.setEllipsize(selected ?
-                    TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
+        if(!this.separator) {
+            this.itemView.setSelected(selected);
+            this.titleView.setTypeface(selected ? this.selectedTypeface : this.normalTypeface);
+            this.titleView.setEllipsize(selected ? TextUtils.TruncateAt.MARQUEE : TextUtils.TruncateAt.END);
         }
     }
 }

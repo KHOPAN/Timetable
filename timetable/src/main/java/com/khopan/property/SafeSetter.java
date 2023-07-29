@@ -2,11 +2,11 @@ package com.khopan.property;
 
 public class SafeSetter<T, R> implements Setter<T, R> {
 	private final SimpleSetter<T> setter;
+	private final R returner;
 	private Updater<T> updater;
 	private boolean isSet;
 	private boolean nullable;
 	private T nullSafety;
-	private R returner;
 
 	public SafeSetter(SimpleSetter<T> setter, R returner) {
 		this(setter, null, returner);

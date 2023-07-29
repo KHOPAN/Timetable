@@ -16,57 +16,41 @@ import com.sec.sesl.khopan.timetable.R;
 import java.util.List;
 
 public class DrawerListAdapter extends RecyclerView.Adapter<DrawerListViewHolder> {
-	private Context mContext;
-	private List<Fragment> mFragments;
-	private DrawerListener mListener;
-	private int mSelectedPos;
+	private final Context context;
+	private final List<Fragment> fragments;
+	private final DrawerListener listener;
+	private int selectedPosition;
 
-	public interface DrawerListener {
-		boolean onDrawerItemSelected(int position);
-	}
-
-	public DrawerListAdapter(@NonNull Context context, List<Fragment> fragments,
-	                         @Nullable DrawerListener listener) {
-		mContext = context;
-		mFragments = fragments;
-		mListener = listener;
+	public DrawerListAdapter(@NonNull Context context, List<Fragment> fragments, @Nullable DrawerListener listener) {
+		this.context = context;
+		this.fragments = fragments;
+		this.listener = listener;
 	}
 
 	@NonNull
 	@Override
 	public DrawerListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-		LayoutInflater inflater = LayoutInflater.from(mContext);
-
-		final boolean isSeparator = viewType == 0;
-		View view;
-		if (isSeparator) {
-			view = inflater.inflate(
-					R.layout.drawer_list_separator, parent, false);
-		} else {
-			view = inflater.inflate(
-					R.layout.drawer_list_item, parent, false);
-		}
-
-		return new DrawerListViewHolder(view, isSeparator);
+		LayoutInflater inflater = LayoutInflater.from(this.context);
+		boolean separator = viewType == 0;
+		return new DrawerListViewHolder(inflater.inflate(separator ? R.layout.drawer_list_separator : R.layout.drawer_list_item, parent, false), separator);
 	}
 
 	@Override
 	public void onBindViewHolder(@NonNull DrawerListViewHolder holder, int position) {
-		if (!holder.isSeparator()) {
-			Fragment fragment = mFragments.get(position);
-			if (fragment instanceof FragmentInfo) {
+		if(!holder.isSeparator()) {
+			Fragment fragment = this.fragments.get(position);
+
+			if(fragment instanceof FragmentInfo) {
 				holder.setIcon(((FragmentInfo) fragment).getIconResourceIdentifier());
 				holder.setTitle(((FragmentInfo) fragment).getTitle());
 			}
-			holder.setSelected(position == mSelectedPos);
-			holder.itemView.setOnClickListener(v -> {
-				final int itemPos = holder.getBindingAdapterPosition();
-				boolean result = false;
-				if (mListener != null) {
-					result = mListener.onDrawerItemSelected(itemPos);
-				}
-				if (result) {
-					setSelectedItem(itemPos);
+
+			holder.setSelected(position == this.selectedPosition);
+			holder.itemView.setOnClickListener(view -> {
+				int itemPosition = holder.getBindingAdapterPosition();
+
+				if(this.listener != null && this.listener.onDrawerItemSelected(itemPosition)) {
+					this.setSelectedItem(itemPosition);
 				}
 			});
 		}
@@ -74,16 +58,20 @@ public class DrawerListAdapter extends RecyclerView.Adapter<DrawerListViewHolder
 
 	@Override
 	public int getItemCount() {
-		return mFragments.size();
+		return this.fragments.size();
 	}
 
 	@Override
 	public int getItemViewType(int position) {
-		return (mFragments.get(position) == null) ? 0 : 1;
+		return this.fragments.get(position) == null ? 0 : 1;
 	}
 
 	public void setSelectedItem(int position) {
-		mSelectedPos = position;
-		notifyItemRangeChanged(0, getItemCount());
+		this.selectedPosition = position;
+		this.notifyItemRangeChanged(0, this.getItemCount());
+	}
+
+	public interface DrawerListener {
+		boolean onDrawerItemSelected(int position);
 	}
 }

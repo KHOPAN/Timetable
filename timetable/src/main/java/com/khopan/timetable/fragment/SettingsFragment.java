@@ -1,17 +1,13 @@
 package com.khopan.timetable.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,19 +33,14 @@ import dev.oneuiproject.oneui.widget.Toast;
 public class SettingsFragment extends PreferenceFragmentCompat implements FragmentInfo {
 	private Context context;
 	private Resources resources;
-	private ActivityResultLauncher<String> internetLauncher;
 
-	private SharedPreferences preferences;
-	private SharedPreferencesDataStore dataStore;
 	private String secretKeyValue;
-	private int theme;
 
 	@Override
 	public void onCreatePreferences(Bundle bundle, String rootKey) {
-		Activity activity = this.getActivity();
-		this.preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
-		this.dataStore = new SharedPreferencesDataStore(this.preferences);
-		this.theme = ThemeUtils.getThemePreference(this.context);
+		Activity activity = this.requireActivity();
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
+		int theme = ThemeUtils.getThemePreference(this.context);
 		PreferenceManager manager = this.getPreferenceManager();
 		PreferenceScreen screen = manager.createPreferenceScreen(this.context);
 		PreferenceCategory timeCategory = new PreferenceCategory(this.context);
@@ -81,7 +72,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 		themePreference.setType(0);
 		themePreference.setDividerEnabled(false);
 		themePreference.setTouchEffectEnabled(false);
-		themePreference.setEnabled(this.theme != ThemeUtils.DEFAULT_THEME);
+		themePreference.setEnabled(theme != ThemeUtils.DEFAULT_THEME);
 		themePreference.setValue(ThemeUtils.isLightTheme(this.context) ? "0" : "1");
 		themePreference.setOnPreferenceChangeListener((preference, value) -> {
 			String currentTheme = Integer.toString(ThemeUtils.getThemePreference(this.context));
@@ -109,7 +100,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 		});
 
 		themeCategory.addPreference(defaultThemePreference);
-		defaultThemePreference.setChecked(this.theme == ThemeUtils.DEFAULT_THEME);
+		defaultThemePreference.setChecked(theme == ThemeUtils.DEFAULT_THEME);
 		PreferenceCategory timetableCategory = new PreferenceCategory(this.context);
 		timetableCategory.setTitle("Timetable");
 		screen.addPreference(timetableCategory);
@@ -124,7 +115,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 		Preference clearTimetablePreference = new Preference(this.context);
 		clearTimetablePreference.setTitle("Clear Timetable");
 		clearTimetablePreference.setOnPreferenceClickListener(preference -> {
-			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
 			SharedPreferences.Editor editor = preferences.edit();
 			editor.putString("subjectList", "");
 			editor.putString("sunday", "");
@@ -174,22 +164,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 		this.setPreferenceScreen(screen);
 	}
 
-	public void requestPermission() {
-		this.internetLauncher.launch(Manifest.permission.INTERNET);
-	}
-
 	@Override
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
 		this.context = context;
 		this.resources = this.getResources();
-		this.internetLauncher = this.registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-			if(isGranted) {
-				SecretKeyProcessor.process(this.secretKeyValue, SettingsFragment.this);
-			} else {
-				this.internetLauncher.launch(Manifest.permission.INTERNET);
-			}
-		});
 	}
 
 	@Override
@@ -215,26 +194,5 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 	@Override
 	public String getTitle() {
 		return this.resources.getString(R.string.settings);
-	}
-
-	private static class SharedPreferencesDataStore extends PreferenceDataStore {
-		private final SharedPreferences preferences;
-
-		private SharedPreferencesDataStore(SharedPreferences preferences) {
-			this.preferences = preferences;
-		}
-
-		@Nullable
-		@Override
-		public String getString(String key, @Nullable String defaultValue) {
-			return this.preferences.getString(key, defaultValue);
-		}
-
-		@Override
-		public void putString(String key, @Nullable String value) {
-			SharedPreferences.Editor editor = this.preferences.edit();
-			editor.putString(key, value);
-			editor.apply();
-		}
 	}
 }

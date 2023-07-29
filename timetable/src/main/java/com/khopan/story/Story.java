@@ -24,7 +24,7 @@ public class Story {
 	}
 
 	public Property<String, Story> name() {
-		return new SimpleProperty<String, Story>(() -> this.name, name -> this.name = name, this).nullable().whenNull("");
+		return new SimpleProperty<>(() -> this.name, name -> this.name = name, this).nullable().whenNull("");
 	}
 
 	public Story addAdditionalInformation(String additionalInformation) {
@@ -115,13 +115,13 @@ public class Story {
 		}
 
 		if(node.has("season")) {
-			for(JsonNode season : (ArrayNode) node.get("season")) {
+			for(JsonNode season : node.get("season")) {
 				story.seasonList.add(Season.deserialize(season));
 			}
 		}
 
 		if(node.has("additional-information")) {
-			for(JsonNode information : (ArrayNode) node.get("additional-information")) {
+			for(JsonNode information : node.get("additional-information")) {
 				story.additionalInformationList.add(information.asText());
 			}
 		}
