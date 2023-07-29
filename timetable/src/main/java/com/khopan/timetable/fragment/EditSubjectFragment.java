@@ -40,7 +40,6 @@ public class EditSubjectFragment extends PreferenceFragmentCompat implements Fra
 
 	private Context context;
 	private Resources resources;
-
 	private ActivityResultLauncher<Intent> launcher;
 	private boolean enableAddingData;
 
@@ -64,9 +63,9 @@ public class EditSubjectFragment extends PreferenceFragmentCompat implements Fra
 		PreferenceCategory controlCategory = new PreferenceCategory(this.context);
 		screen.addPreference(controlCategory);
 		Preference addButton = new Preference(this.context);
-		addButton.setTitle("Add Subject");
+		addButton.setTitle(this.resources.getString(R.string.addSubject));
 		addButton.setIcon(R.drawable.add_icon);
-		addButton.setOnPreferenceClickListener(preference -> FragmentSettingsActivity.launch(this, FragmentTitle.title("Edit Subject", "Add Subject"), this.launcher, AddSubjectFragment.class, null));
+		addButton.setOnPreferenceClickListener(preference -> FragmentSettingsActivity.launch(this, FragmentTitle.title(this.resources.getString(R.string.editSubject), this.resources.getString(R.string.addSubject)), this.launcher, AddSubjectFragment.class, null));
 		controlCategory.addPreference(addButton);
 		this.removeButton = new MultiSelectListPreference(this.context);
 		this.removeButton.setPreferenceDataStore(new PreferenceDataStore() {
@@ -97,7 +96,7 @@ public class EditSubjectFragment extends PreferenceFragmentCompat implements Fra
 		});
 
 		this.removeButton.setKey("removeSubject");
-		this.removeButton.setTitle("Remove Subject");
+		this.removeButton.setTitle(this.resources.getString(R.string.removeSubject));
 		this.removeButton.setIcon(R.drawable.remove_icon);
 		this.removeButton.setDefaultValue(new LinkedHashSet<>());
 		controlCategory.addPreference(this.removeButton);

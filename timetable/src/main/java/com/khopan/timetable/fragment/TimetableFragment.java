@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -46,6 +47,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 	static DateFormat DateFormat;
 
 	private Activity activity;
+	private Resources resources;
 	private long lastTime;
 	private Vibrator vibrator;
 
@@ -68,6 +70,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
 		this.activity = this.requireActivity();
+		this.resources = this.activity.getResources();
 		this.vibrator = this.activity.getSystemService(Vibrator.class);
 
 		if(!this.vibrator.hasVibrator()) {
@@ -96,13 +99,26 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 		this.previousSubjectIdentifierView = view.findViewById(R.id.previousSubjectIdentifierView);
 		this.previousSubjectTeacherView = view.findViewById(R.id.previousSubjectTeacherView);
 		this.previousSubjectTimezoneView = view.findViewById(R.id.previousSubjectTimezoneView);
+		String none = this.resources.getString(R.string.noneText);
+		this.currentSubjectView.setText(none);
+		this.currentSubjectIdentifierView.setText(String.format("%s: %s", this.resources.getString(R.string.identifier), none));
+		this.currentSubjectTeacherView.setText(String.format("%s: %s", this.resources.getString(R.string.teacher), none));
+		this.currentSubjectTimezoneView.setText(String.format("%s: %s", this.resources.getString(R.string.timezone), none));
+		this.nextSubjectView.setText(none);
+		this.nextSubjectIdentifierView.setText(String.format("%s: %s", this.resources.getString(R.string.identifier), none));
+		this.nextSubjectTeacherView.setText(String.format("%s: %s", this.resources.getString(R.string.teacher), none));
+		this.nextSubjectTimezoneView.setText(String.format("%s: %s", this.resources.getString(R.string.timezone), none));
+		this.previousSubjectView.setText(none);
+		this.previousSubjectIdentifierView.setText(String.format("%s: %s", this.resources.getString(R.string.identifier), none));
+		this.previousSubjectTeacherView.setText(String.format("%s: %s", this.resources.getString(R.string.teacher), none));
+		this.previousSubjectTimezoneView.setText(String.format("%s: %s", this.resources.getString(R.string.timezone), none));
 		this.initializeNotification();
 		TickRegistry.attach(this :: update);
 	}
 
 	private void initializeNotification() {
 		NotificationManager manager = this.activity.getSystemService(NotificationManager.class);
-		NotificationChannel channel = new NotificationChannel("subjectNotification", "Subject Notification", NotificationManager.IMPORTANCE_HIGH);
+		NotificationChannel channel = new NotificationChannel("subjectNotification", this.resources.getString(R.string.subjectNotification), NotificationManager.IMPORTANCE_HIGH);
 		channel.setShowBadge(false);
 		channel.enableLights(true);
 		channel.enableVibration(true);
@@ -208,9 +224,12 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 		SeparatedStringBuilder currentSubjectIdentifierBuilder = new SeparatedStringBuilder();
 		SeparatedStringBuilder currentSubjectTeacherBuilder = new SeparatedStringBuilder();
 		SeparatedStringBuilder currentSubjectTimezoneBuilder = new SeparatedStringBuilder();
-		currentSubjectIdentifierBuilder.appendRaw("Identifier: ");
-		currentSubjectTeacherBuilder.appendRaw("Teacher: ");
-		currentSubjectTimezoneBuilder.appendRaw("Timezone: ");
+		currentSubjectIdentifierBuilder.appendRaw(this.resources.getString(R.string.identifier));
+		currentSubjectIdentifierBuilder.appendRaw(": ");
+		currentSubjectTeacherBuilder.appendRaw(this.resources.getString(R.string.teacher));
+		currentSubjectTeacherBuilder.appendRaw(": ");
+		currentSubjectTimezoneBuilder.appendRaw(this.resources.getString(R.string.timezone));
+		currentSubjectTimezoneBuilder.appendRaw(": ");
 		boolean none = false;
 
 		if(size > 0) {
@@ -221,13 +240,13 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 				if(data.subjectName != null && !data.subjectName.isEmpty()) {
 					currentSubjectBuilder.append(data.subjectName);
 				} else {
-					currentSubjectBuilder.append("None");
+					currentSubjectBuilder.append(this.resources.getString(R.string.noneText));
 				}
 
 				if(data.subjectIdentifier != null && !data.subjectIdentifier.isEmpty()) {
 					currentSubjectIdentifierBuilder.append(data.subjectIdentifier);
 				} else {
-					currentSubjectIdentifierBuilder.append("None");
+					currentSubjectIdentifierBuilder.append(this.resources.getString(R.string.noneText));
 				}
 
 				if(data.teacherList != null && data.teacherList.length != 0) {
@@ -239,7 +258,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 
 					currentSubjectTeacherBuilder.append(teacherBuilder);
 				} else {
-					currentSubjectTeacherBuilder.append("None");
+					currentSubjectTeacherBuilder.append(this.resources.getString(R.string.noneText));
 				}
 
 				currentSubjectTimezoneBuilder.append(this.time(subjectEntry));
@@ -260,7 +279,8 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 			TimetableService.LastCurrentSubjectText = currentSubjectText;
 			SeparatedStringBuilder builder = new SeparatedStringBuilder();
 			builder.setSeparateText("\n");
-			builder.appendRaw("Current Subject: ");
+			builder.appendRaw(this.resources.getString(R.string.currentSubject));
+			builder.appendRaw(": ");
 			builder.append(currentSubjectText);
 			builder.append(currentSubjectIdentifierText);
 			builder.append(currentSubjectTeacherText);
@@ -290,9 +310,12 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 		SeparatedStringBuilder subjectIdentifierBuilder = new SeparatedStringBuilder();
 		SeparatedStringBuilder subjectTeacherBuilder = new SeparatedStringBuilder();
 		SeparatedStringBuilder subjectTimezoneBuilder = new SeparatedStringBuilder();
-		subjectIdentifierBuilder.appendRaw("Identifier: ");
-		subjectTeacherBuilder.appendRaw("Teacher: ");
-		subjectTimezoneBuilder.appendRaw("Timezone: ");
+		subjectIdentifierBuilder.appendRaw(this.resources.getString(R.string.identifier));
+		subjectIdentifierBuilder.appendRaw(": ");
+		subjectTeacherBuilder.appendRaw(this.resources.getString(R.string.teacher));
+		subjectTeacherBuilder.appendRaw(": ");
+		subjectTimezoneBuilder.appendRaw(this.resources.getString(R.string.timezone));
+		subjectTimezoneBuilder.appendRaw(": ");
 
 		if(size > 0) {
 			for(Subject subjectEntry : subjectList) {
@@ -303,13 +326,13 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 					if(data.subjectName != null && !data.subjectName.isEmpty()) {
 						subjectBuilder.append(data.subjectName);
 					} else {
-						subjectBuilder.append("None");
+						subjectBuilder.append(this.resources.getString(R.string.noneText));
 					}
 
 					if(data.subjectIdentifier != null && !data.subjectIdentifier.isEmpty()) {
 						subjectIdentifierBuilder.append(data.subjectIdentifier);
 					} else {
-						subjectIdentifierBuilder.append("None");
+						subjectIdentifierBuilder.append(this.resources.getString(R.string.noneText));
 					}
 
 					if(data.teacherList != null && data.teacherList.length != 0) {
@@ -321,7 +344,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 
 						subjectTeacherBuilder.append(teacherBuilder);
 					} else {
-						subjectTeacherBuilder.append("None");
+						subjectTeacherBuilder.append(this.resources.getString(R.string.noneText));
 					}
 
 					subjectTimezoneBuilder.append(this.time(subjectEntry));
@@ -367,7 +390,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 				continue;
 			}
 
-			builder.append("None");
+			builder.append(this.resources.getString(R.string.noneText));
 		}
 	}
 
@@ -388,6 +411,6 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 
 	@Override
 	public String getTitle() {
-		return this.resources.getString(R.string.app_name);
+		return this.resources.getString(R.string.timetable);
 	}
 }

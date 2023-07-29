@@ -1,6 +1,7 @@
 package com.khopan.timetable.fragment;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.khopan.story.Story;
 import com.khopan.timetable.settings.FragmentSettingsActivity;
 import com.khopan.timetable.settings.FragmentTitle;
 import com.khopan.timetable.utils.SeparatedStringBuilder;
+import com.sec.sesl.khopan.timetable.R;
 
 import java.util.List;
 
@@ -25,11 +27,13 @@ import dev.oneuiproject.oneui.widget.Toast;
 
 public class StoryFragment extends PreferenceFragmentCompat {
 	private Context context;
+	private Resources resources;
 
 	@Override
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
 		this.context = context;
+		this.resources = this.context.getResources();
 	}
 
 	@Override
@@ -46,7 +50,7 @@ public class StoryFragment extends PreferenceFragmentCompat {
 			ObjectMapper mapper = new ObjectMapper();
 			node = mapper.readTree(bundle.getString("story"));
 		} catch(Throwable ignored) {
-			Toast.makeText(this.context, "Error while parsing JSON", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this.context, this.resources.getString(R.string.parsingJSONError), Toast.LENGTH_SHORT).show();
 		}
 
 		Story story = Story.deserialize(node);

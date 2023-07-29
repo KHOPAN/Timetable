@@ -9,27 +9,76 @@
     <string name="runningInTheBackground">Timetable service is running in the background</string>
     <!-- End Service -->
 
+    <!-- Notification -->
+    <string name="serviceNotification">Service Notification</string>
+    <string name="subjectNotification">Subject Notification</string>
+    <!-- End Notification -->
+
     <!-- Subject Fragment -->
-    <string name="subject">Subject</string>
-    <string name="placeholderText">Placeholder Text</string>
+    <string name="timetable">Timetable</string>
+    <string name="noneText">None</string>
     <string name="currentSubject">Current Subject</string>
     <string name="time">Time</string>
     <string name="nextSubject">Next Subject</string>
     <string name="previousSubject">Previous Subject</string>
+    <string name="identifier">Identifier</string>
+    <string name="teacher">Teacher</string>
+    <string name="timezone">Timezone</string>
     <!-- End Subject Fragment -->
 
     <!-- Settings Fragment -->
     <string name="settings">Settings</string>
-
+    <string name="timeFormat">Time Format</string>
+    <string name="dateFormat">Date Format</string>
+    <string name="theme">Theme</string>
+    <string name="themeSettings">Theme Settings</string>
+    <string name="lightTheme">Light</string>
+    <string name="darkTheme">Dark</string>
+    <string name="defaultTheme">System Default</string>
+    <string name="syncTimetable">Sync Timetable</string>
+    <string name="fetchGitHub">Fetching data from GitHub</string>
+    <string name="errorFetching">Error while fetching data from GitHub</string>
+    <string name="missingTimeProfile">Warning: Missing TimeProfile, loading the default one</string>
+    <string name="syncSuccess">Successfully sync Timetable data</string>
+    <string name="update">Update</string>
+    <string name="clearTimetable">Clear Timetable</string>
+    <string name="clearSuccess">Successfully reset Timetable data</string>
     <string name="secretKeyTitle">Secret Key</string>
     <string name="enterSecretKeys">Enter secret keys</string>
+    <string name="invalidKey">Invalid Key</string>
+    <string name="secret">Secret</string>
+    <string name="processingSecretError">Error while processing secret key</string>
+    <string name="nullResponseGitHub">Error: Null response from GitHub</string>
+    <string name="parsingJSONError">Error while parsing JSON</string>
     <!-- End Settings Fragment -->
 
     <!-- Edit Timetable Fragment -->
     <string name="editTimetable">Edit Timetable</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="addSubject">Add Subject</string>
+    <string name="removeSubject">Remove Subject</string>
+    <string name="nullSubjectListError">Internal Error: Null subject list</string>
+    <string name="emptySubjectError">Error: Empty subject</string>
+    <string name="subject">Subject</string>
+    <string name="startTime">Start Time</string>
+    <string name="endTime">End Time</string>
+    <string name="done">Done</string>
+    <string name="cancel">Cancel</string>
     <!-- End Edit Timetable Fragment -->
 
     <!-- Edit Subject Fragment -->
     <string name="editSubject">Edit Subject</string>
+    <string name="subjectName">Subject Name</string>
+    <string name="subjectIdentifier">Subject Identifier</string>
+    <string name="teachers">Teachers</string>
+    <string name="addTeacher">Add Teacher</string>
+    <string name="removeTeacher">Remove Teacher</string>
+    <string name="teacherName">Teacher Name</string>
     <!-- End Edit Subject Fragment -->
 </resources>

@@ -27,7 +27,7 @@ public class TimetableService extends Service {
 		String channelName = "timetableBackgroundService";
 		Resources resources = this.getResources();
 		Context context = this.getBaseContext();
-		NotificationChannel channel = new NotificationChannel(channelName, "Service Notification", NotificationManager.IMPORTANCE_LOW);
+		NotificationChannel channel = new NotificationChannel(channelName, resources.getString(R.string.serviceNotification), NotificationManager.IMPORTANCE_LOW);
 		channel.setShowBadge(false);
 		channel.enableLights(false);
 		channel.enableVibration(false);

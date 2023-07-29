@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.khopan.timetable.data.Subject;
 import com.khopan.timetable.data.SubjectData;
 import com.khopan.timetable.data.SubjectDataList;
 import com.khopan.timetable.settings.FragmentSettingsActivity;
+import com.sec.sesl.khopan.timetable.R;
 
 import java.util.Locale;
 
@@ -29,6 +31,7 @@ import dev.oneuiproject.oneui.widget.Toast;
 
 public class DaySubjectSettingsFragment extends PreferenceFragmentCompat {
 	private Context context;
+	private Resources resources;
 	private int startTimeHour;
 	private int startTimeMinute;
 	private int endTimeHour;
@@ -40,6 +43,7 @@ public class DaySubjectSettingsFragment extends PreferenceFragmentCompat {
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
 		this.context = context;
+		this.resources = this.context.getResources();
 	}
 
 	@Override
@@ -65,7 +69,7 @@ public class DaySubjectSettingsFragment extends PreferenceFragmentCompat {
 		}
 
 		if(dataList == null || dataList.length == 0) {
-			Toast.makeText(this.context, "Error: Empty Subject", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this.context, this.resources.getString(R.string.emptySubjectError), Toast.LENGTH_SHORT).show();
 			this.requireActivity().finish();
 			return;
 		}
@@ -89,7 +93,7 @@ public class DaySubjectSettingsFragment extends PreferenceFragmentCompat {
 		});
 
 		this.subjectSelectPreference.setKey("subject");
-		this.subjectSelectPreference.setTitle("Subject");
+		this.subjectSelectPreference.setTitle(this.resources.getString(R.string.subject));
 		CharSequence[] entryList = new CharSequence[dataList.length];
 		CharSequence[] entryValueList = new CharSequence[entryList.length];
 
@@ -103,7 +107,7 @@ public class DaySubjectSettingsFragment extends PreferenceFragmentCompat {
 		this.subjectSelectPreference.setDefaultValue(entryValueList[0]);
 		category.addPreference(this.subjectSelectPreference);
 		Preference startTimePickerPreference = new Preference(this.context);
-		startTimePickerPreference.setTitle("Start Time");
+		startTimePickerPreference.setTitle(this.resources.getString(R.string.startTime));
 		startTimePickerPreference.setSummary("00:00");
 		SeslTimePickerDialog startTimePicker = new SeslTimePickerDialog(this.context, (view, hour, minute) -> {
 			startTimePickerPreference.setSummary(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
@@ -118,7 +122,7 @@ public class DaySubjectSettingsFragment extends PreferenceFragmentCompat {
 
 		category.addPreference(startTimePickerPreference);
 		Preference endTimePickerPreference = new Preference(this.context);
-		endTimePickerPreference.setTitle("End Time");
+		endTimePickerPreference.setTitle(this.resources.getString(R.string.endTime));
 		endTimePickerPreference.setSummary("00:00");
 		SeslTimePickerDialog endTimePicker = new SeslTimePickerDialog(this.context, (view, hour, minute) -> {
 			endTimePickerPreference.setSummary(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
@@ -135,7 +139,7 @@ public class DaySubjectSettingsFragment extends PreferenceFragmentCompat {
 		PreferenceCategory controlCategory = new PreferenceCategory(this.context);
 		screen.addPreference(controlCategory);
 		Preference donePreference = new Preference(this.context);
-		donePreference.setTitle("Done");
+		donePreference.setTitle(this.resources.getString(R.string.done));
 		donePreference.setOnPreferenceClickListener(preference -> {
 			Intent intent = new Intent();
 			Subject subject = new Subject();
@@ -150,7 +154,7 @@ public class DaySubjectSettingsFragment extends PreferenceFragmentCompat {
 
 		controlCategory.addPreference(donePreference);
 		Preference cancelPreference = new Preference(this.context);
-		cancelPreference.setTitle("Cancel");
+		cancelPreference.setTitle(this.resources.getString(R.string.cancel));
 		cancelPreference.setOnPreferenceClickListener(preference -> FragmentSettingsActivity.finish(this));
 		controlCategory.addPreference(cancelPreference);
 		this.setPreferenceScreen(screen);

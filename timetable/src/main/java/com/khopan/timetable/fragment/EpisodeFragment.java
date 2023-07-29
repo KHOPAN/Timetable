@@ -1,6 +1,7 @@
 package com.khopan.timetable.fragment;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +24,13 @@ import dev.oneuiproject.oneui.widget.Toast;
 
 public class EpisodeFragment extends Fragment {
 	private Context context;
+	private Resources resources;
 
 	@Override
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
 		this.context = context;
+		this.resources = this.context.getResources();
 	}
 
 	@Nullable
@@ -51,7 +54,7 @@ public class EpisodeFragment extends Fragment {
 			ObjectMapper mapper = new ObjectMapper();
 			node = mapper.readTree(bundle.getString("episode"));
 		} catch(Throwable ignored) {
-			Toast.makeText(this.context, "Error while parsing JSON", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this.context, this.resources.getString(R.string.parsingJSONError), Toast.LENGTH_SHORT).show();
 		}
 
 		Episode episode = Episode.deserialize(node);

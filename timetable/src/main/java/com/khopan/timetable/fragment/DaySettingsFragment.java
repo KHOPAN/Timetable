@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -41,6 +42,7 @@ public class DaySettingsFragment extends PreferenceFragmentCompat {
 	private final List<Subject> subjectList;
 
 	private Context context;
+	private Resources resources;
 	private ActivityResultLauncher<Intent> launcher;
 	private boolean enableAddingData;
 	private String dayIdentifier;
@@ -58,6 +60,7 @@ public class DaySettingsFragment extends PreferenceFragmentCompat {
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
 		this.context = context;
+		this.resources = this.context.getResources();
 		this.launcher = this.registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
 			if(result.getResultCode() == Activity.RESULT_OK) {
 				Intent data = result.getData();
@@ -92,9 +95,9 @@ public class DaySettingsFragment extends PreferenceFragmentCompat {
 		PreferenceCategory controlCategory = new PreferenceCategory(this.context);
 		screen.addPreference(controlCategory);
 		Preference addSubjectPreference = new Preference(this.context);
-		addSubjectPreference.setTitle("Add Subject");
+		addSubjectPreference.setTitle(this.resources.getString(R.string.addSubject));
 		addSubjectPreference.setIcon(R.drawable.add_icon);
-		addSubjectPreference.setOnPreferenceClickListener(preference -> FragmentSettingsActivity.launch(this, FragmentTitle.title(dayName, "Add Subject"), this.launcher, DaySubjectSettingsFragment.class, null));
+		addSubjectPreference.setOnPreferenceClickListener(preference -> FragmentSettingsActivity.launch(this, FragmentTitle.title(dayName, this.resources.getString(R.string.addSubject)), this.launcher, DaySubjectSettingsFragment.class, null));
 		controlCategory.addPreference(addSubjectPreference);
 		this.removeButton = new MultiSelectListPreference(this.context);
 		this.removeButton.setPreferenceDataStore(new PreferenceDataStore() {
@@ -125,7 +128,7 @@ public class DaySettingsFragment extends PreferenceFragmentCompat {
 		});
 
 		this.removeButton.setKey("removeSubject");
-		this.removeButton.setTitle("Remove Subject");
+		this.removeButton.setTitle(this.resources.getString(R.string.removeSubject));
 		this.removeButton.setIcon(R.drawable.remove_icon);
 		this.removeButton.setDefaultValue(new LinkedHashSet<>());
 		this.removeButton.setVisible(false);
@@ -159,7 +162,7 @@ public class DaySettingsFragment extends PreferenceFragmentCompat {
 		SubjectDataList list = this.getSubjectDataList();
 
 		if(list == null) {
-			Toast.makeText(this.context, "Internal Error: Null subject list", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this.context, this.resources.getString(R.string.nullSubjectListError), Toast.LENGTH_LONG).show();
 			return;
 		}
 

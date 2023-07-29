@@ -1,6 +1,7 @@
 package com.khopan.timetable.activity;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,11 +23,12 @@ public class SyncTimetableActivity extends AppCompatActivity {
 		this.binding = FragmentSettingsActivityBinding.inflate(this.getLayoutInflater());
 		this.setContentView(this.binding.getRoot());
 		this.binding.drawerLayout.setNavigationButtonAsBack();
-		this.binding.drawerLayout.setTitle("Settings", "Sync Timetable");
-		this.binding.drawerLayout.setExpandedSubtitle("Sync Timetable");
+		String syncText = this.getString(R.string.syncTimetable);
+		this.binding.drawerLayout.setTitle(this.getString(R.string.settings), syncText);
+		this.binding.drawerLayout.setExpandedSubtitle(syncText);
 		this.getSupportFragmentManager()
 				.beginTransaction()
-				.replace(R.id.main_content, new LoadingFragment("Fetching data from GitHub"))
+				.replace(R.id.main_content, new LoadingFragment(this.getString(R.string.fetchGitHub)))
 				.commit();
 
 		new Thread(() -> SecretTimetableFetcher.fetch(this)).start();

@@ -27,7 +27,16 @@ public class EditTimetableFragment extends PreferenceFragmentCompat implements F
 		PreferenceScreen screen = manager.createPreferenceScreen(this.context);
 		PreferenceCategory category = new PreferenceCategory(this.context);
 		screen.addPreference(category);
-		String[] name = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+		String[] name = {
+				this.resources.getString(R.string.sunday),
+				this.resources.getString(R.string.monday),
+				this.resources.getString(R.string.tuesday),
+				this.resources.getString(R.string.wednesday),
+				this.resources.getString(R.string.thursday),
+				this.resources.getString(R.string.friday),
+				this.resources.getString(R.string.saturday)
+		};
+
 		String[] identifier = {"sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"};
 
 		for(int i = 0; i < name.length; i++) {
@@ -39,7 +48,7 @@ public class EditTimetableFragment extends PreferenceFragmentCompat implements F
 				Bundle extras = new Bundle();
 				extras.putString("dayName", dayName);
 				extras.putString("dayIdentifier", dayIdentifier);
-				return FragmentSettingsActivity.start(this, FragmentTitle.title("Edit Timetable", dayName), DaySettingsFragment.class, extras);
+				return FragmentSettingsActivity.start(this, FragmentTitle.title(this.resources.getString(R.string.editTimetable), dayName), DaySettingsFragment.class, extras);
 			});
 
 			category.addPreference(preference);

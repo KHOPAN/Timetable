@@ -3,6 +3,7 @@ package com.khopan.timetable.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ public class AddSubjectFragment extends PreferenceFragmentCompat {
 	private final List<EditTextPreference> preferenceList;
 
 	private Context context;
+	private Resources resources;
 
 	private EditTextPreference namePreference;
 	private EditTextPreference subjectIdPreference;
@@ -49,6 +51,7 @@ public class AddSubjectFragment extends PreferenceFragmentCompat {
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
 		this.context = context;
+		this.resources = this.context.getResources();
 	}
 
 	@Override
@@ -56,26 +59,26 @@ public class AddSubjectFragment extends PreferenceFragmentCompat {
 		PreferenceManager manager = this.getPreferenceManager();
 		PreferenceScreen screen = manager.createPreferenceScreen(this.context);
 		PreferenceCategory subjectCategory = new PreferenceCategory(this.context);
-		subjectCategory.setTitle("Subject");
+		subjectCategory.setTitle(this.resources.getString(R.string.subject));
 		screen.addPreference(subjectCategory);
 		this.namePreference = new EditTextPreference(this.context);
 		this.namePreference.setPreferenceDataStore(this.store);
 		this.namePreference.setKey("subjectName");
-		this.namePreference.setSummary("Subject Name");
+		this.namePreference.setSummary(this.resources.getString(R.string.subjectName));
 		this.namePreference.setText("New Subject");
-		this.namePreference.setDialogTitle("Subject Name:");
+		this.namePreference.setDialogTitle(this.resources.getString(R.string.subjectName) + ":");
 		this.store.putString("subjectName", "New Subject");
 		subjectCategory.addPreference(this.namePreference);
 		this.subjectIdPreference = new EditTextPreference(this.context);
 		this.subjectIdPreference.setPreferenceDataStore(this.store);
 		this.subjectIdPreference.setKey("subjectId");
-		this.subjectIdPreference.setSummary("Subject Identifier");
+		this.subjectIdPreference.setSummary(this.resources.getString(R.string.subjectIdentifier));
 		this.subjectIdPreference.setText("None");
-		this.subjectIdPreference.setDialogTitle("Subject Identifier:");
+		this.subjectIdPreference.setDialogTitle(this.resources.getString(R.string.subjectIdentifier) + ":");
 		this.store.putString("subjectId", "None");
 		subjectCategory.addPreference(this.subjectIdPreference);
 		this.teacherCategory = new PreferenceCategory(this.context);
-		this.teacherCategory.setTitle("Teacher");
+		this.teacherCategory.setTitle(this.resources.getString(R.string.teacher));
 		screen.addPreference(this.teacherCategory);
 		this.teacherCategory.setVisible(false);
 		PreferenceCategory addRemoveCategory = new PreferenceCategory(this.context);
@@ -83,8 +86,8 @@ public class AddSubjectFragment extends PreferenceFragmentCompat {
 		this.addTeacherPreference = new EditTextPreference(this.context);
 		this.addTeacherPreference.setPreferenceDataStore(this.store);
 		this.addTeacherPreference.setKey("addTeacher");
-		this.addTeacherPreference.setTitle("Add Teacher");
-		this.addTeacherPreference.setDialogTitle("Teacher Name:");
+		this.addTeacherPreference.setTitle(this.resources.getString(R.string.addTeacher));
+		this.addTeacherPreference.setDialogTitle(this.resources.getString(R.string.teacherName) + ":");
 		this.addTeacherPreference.setIcon(R.drawable.add_icon);
 		addRemoveCategory.addPreference(this.addTeacherPreference);
 		this.removeTeacherPreference = new MultiSelectListPreference(this.context);
@@ -113,7 +116,7 @@ public class AddSubjectFragment extends PreferenceFragmentCompat {
 		});
 
 		this.removeTeacherPreference.setKey("removeTeacher");
-		this.removeTeacherPreference.setTitle("Remove Teacher");
+		this.removeTeacherPreference.setTitle(this.resources.getString(R.string.removeTeacher));
 		this.removeTeacherPreference.setIcon(R.drawable.remove_icon);
 		this.removeTeacherPreference.setDefaultValue(new LinkedHashSet<>());
 		this.removeTeacherPreference.setVisible(false);
@@ -121,7 +124,7 @@ public class AddSubjectFragment extends PreferenceFragmentCompat {
 		PreferenceCategory buttonCategory = new PreferenceCategory(this.context);
 		screen.addPreference(buttonCategory);
 		Preference donePreference = new Preference(this.context);
-		donePreference.setTitle("Done");
+		donePreference.setTitle(this.resources.getString(R.string.done));
 		donePreference.setOnPreferenceClickListener(preference -> {
 			Intent intent = new Intent();
 			SubjectData data = new SubjectData();
@@ -139,7 +142,7 @@ public class AddSubjectFragment extends PreferenceFragmentCompat {
 
 		buttonCategory.addPreference(donePreference);
 		Preference cancelPreference = new Preference(this.context);
-		cancelPreference.setTitle("Cancel");
+		cancelPreference.setTitle(this.resources.getString(R.string.cancel));
 		cancelPreference.setOnPreferenceClickListener(preference -> FragmentSettingsActivity.finish(this));
 		buttonCategory.addPreference(cancelPreference);
 		this.setPreferenceScreen(screen);
@@ -165,9 +168,9 @@ public class AddSubjectFragment extends PreferenceFragmentCompat {
 		});
 
 		preference.setKey("teacher" + this.teacherCategory.getPreferenceCount());
-		preference.setSummary("Teacher Name");
+		preference.setSummary(this.resources.getString(R.string.teacherName));
 		preference.setTitle(teacherName);
-		preference.setDialogTitle("Teacher Name:");
+		preference.setDialogTitle(this.resources.getString(R.string.teacherName) + ":");
 		preference.setText(teacherName);
 		this.teacherCategory.addPreference(preference);
 		this.updateRemoveTeacher();
@@ -208,9 +211,9 @@ public class AddSubjectFragment extends PreferenceFragmentCompat {
 		}
 
 		if(count > 1) {
-			this.teacherCategory.setTitle("Teachers");
+			this.teacherCategory.setTitle(this.resources.getString(R.string.teachers));
 		} else {
-			this.teacherCategory.setTitle("Teacher");
+			this.teacherCategory.setTitle(this.resources.getString(R.string.teacher));
 		}
 	}
 

@@ -44,29 +44,29 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 		PreferenceManager manager = this.getPreferenceManager();
 		PreferenceScreen screen = manager.createPreferenceScreen(this.context);
 		PreferenceCategory timeCategory = new PreferenceCategory(this.context);
-		timeCategory.setTitle("Time");
+		timeCategory.setTitle(this.resources.getString(R.string.time));
 		screen.addPreference(timeCategory);
 		EditDateFormatPreference timeFormatPreference = new EditDateFormatPreference(this.context);
 		timeFormatPreference.setKey("timeFormat");
-		timeFormatPreference.setTitle("Time Format");
+		timeFormatPreference.setTitle(this.resources.getString(R.string.timeFormat));
 		timeFormatPreference.setDefaultValue("HH:mm.ss");
 		timeFormatPreference.setPersistent(true);
 		timeFormatPreference.setOnDateFormatChangeListener(format -> TimetableFragment.TimeFormat = format);
 		timeCategory.addPreference(timeFormatPreference);
 		EditDateFormatPreference dateFormatPreference = new EditDateFormatPreference(this.context);
 		dateFormatPreference.setKey("dateFormat");
-		dateFormatPreference.setTitle("Date Format");
+		dateFormatPreference.setTitle(this.resources.getString(R.string.dateFormat));
 		dateFormatPreference.setDefaultValue("dd EEEE MMMM yyyy");
 		dateFormatPreference.setPersistent(true);
 		dateFormatPreference.setOnDateFormatChangeListener(format -> TimetableFragment.DateFormat = format);
 		timeCategory.addPreference(dateFormatPreference);
 		PreferenceCategory themeCategory = new PreferenceCategory(this.context);
-		themeCategory.setTitle("Theme");
+		themeCategory.setTitle(this.resources.getString(R.string.theme));
 		screen.addPreference(themeCategory);
 		HorizontalRadioPreference themePreference = new HorizontalRadioPreference(this.context, null);
 		themePreference.setKey("theme");
-		themePreference.setTitle("Theme Settings");
-		themePreference.setEntries(new String[] {"Light", "Dark"});
+		themePreference.setTitle(this.resources.getString(R.string.themeSettings));
+		themePreference.setEntries(new String[] {this.resources.getString(R.string.lightTheme), this.resources.getString(R.string.darkTheme)});
 		themePreference.setEntriesImage(new int[] {R.drawable.display_help_light_mode, R.drawable.display_help_dark_mode});
 		themePreference.setEntryValues(new String[] {"0", "1"});
 		themePreference.setType(0);
@@ -87,7 +87,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 		themeCategory.addPreference(themePreference);
 		SwitchPreference defaultThemePreference = new SwitchPreference(this.context);
 		defaultThemePreference.setKey("systemTheme");
-		defaultThemePreference.setTitle("System Default");
+		defaultThemePreference.setTitle(this.resources.getString(R.string.defaultTheme));
 		defaultThemePreference.setOnPreferenceChangeListener((preference, value) -> {
 			boolean state = (boolean) value;
 			themePreference.setEnabled(!state);
@@ -102,10 +102,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 		themeCategory.addPreference(defaultThemePreference);
 		defaultThemePreference.setChecked(theme == ThemeUtils.DEFAULT_THEME);
 		PreferenceCategory timetableCategory = new PreferenceCategory(this.context);
-		timetableCategory.setTitle("Timetable");
+		timetableCategory.setTitle(this.resources.getString(R.string.timetable));
 		screen.addPreference(timetableCategory);
 		Preference syncTimetablePreference = new Preference(this.context);
-		syncTimetablePreference.setTitle("Sync Timetable");
+		syncTimetablePreference.setTitle(this.resources.getString(R.string.syncTimetable));
 		syncTimetablePreference.setOnPreferenceClickListener(preference -> {
 			activity.startActivity(new Intent(activity, SyncTimetableActivity.class));
 			return true;
@@ -113,7 +113,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 
 		timetableCategory.addPreference(syncTimetablePreference);
 		Preference clearTimetablePreference = new Preference(this.context);
-		clearTimetablePreference.setTitle("Clear Timetable");
+		clearTimetablePreference.setTitle(this.resources.getString(R.string.clearTimetable));
 		clearTimetablePreference.setOnPreferenceClickListener(preference -> {
 			SharedPreferences.Editor editor = preferences.edit();
 			editor.putString("subjectList", "");
@@ -125,7 +125,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 			editor.putString("friday", "");
 			editor.putString("saturday", "");
 			editor.apply();
-			Toast.makeText(this.context, "Successfully reset Timetable data", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this.context, this.resources.getString(R.string.clearSuccess), Toast.LENGTH_SHORT).show();
 			return true;
 		});
 
