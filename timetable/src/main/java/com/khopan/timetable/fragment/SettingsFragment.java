@@ -1,6 +1,8 @@
 package com.khopan.timetable.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,9 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
+import androidx.preference.EditTextPreferenceDialogFragmentCompat;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceDataStore;
+import androidx.preference.PreferenceDialogFragmentCompat;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
@@ -115,17 +119,26 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 		Preference clearTimetablePreference = new Preference(this.context);
 		clearTimetablePreference.setTitle(this.resources.getString(R.string.clearTimetable));
 		clearTimetablePreference.setOnPreferenceClickListener(preference -> {
-			SharedPreferences.Editor editor = preferences.edit();
-			editor.putString("subjectList", "");
-			editor.putString("sunday", "");
-			editor.putString("monday", "");
-			editor.putString("tuesday", "");
-			editor.putString("wednesday", "");
-			editor.putString("thursday", "");
-			editor.putString("friday", "");
-			editor.putString("saturday", "");
-			editor.apply();
-			Toast.makeText(this.context, this.resources.getString(R.string.clearSuccess), Toast.LENGTH_SHORT).show();
+			new AlertDialog.Builder(this.context)
+					.setTitle(this.resources.getString(R.string.clearTimetable))
+					.setMessage(this.resources.getString(R.string.clearTimetableConfirm))
+					.setPositiveButton(this.resources.getString(R.string.ok), (dialogInterface, someInteger) -> {
+						SharedPreferences.Editor editor = preferences.edit();
+						editor.putString("subjectList", "");
+						editor.putString("sunday", "");
+						editor.putString("monday", "");
+						editor.putString("tuesday", "");
+						editor.putString("wednesday", "");
+						editor.putString("thursday", "");
+						editor.putString("friday", "");
+						editor.putString("saturday", "");
+						editor.apply();
+						Toast.makeText(this.context, this.resources.getString(R.string.clearSuccess), Toast.LENGTH_SHORT).show();
+					})
+
+					.setNegativeButton(this.resources.getString(R.string.cancel), null)
+					.show();
+
 			return true;
 		});
 

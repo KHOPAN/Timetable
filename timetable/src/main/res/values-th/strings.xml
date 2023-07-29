@@ -42,6 +42,8 @@
     <string name="syncSuccess">ซิงค์ข้อมูลตารางเรียนสำเร็จ</string>
     <string name="update">อัพเดต</string>
     <string name="clearTimetable">ล้างข้อมูลตารางเรียน</string>
+    <string name="clearTimetableConfirm">คุณต้องการจะล้างข้อมูลตารางเรียนหรือไม่?</string>
+    <string name="ok">ตกลง</string>
     <string name="clearSuccess">ล้างข้อมูลตารางเรียนสำเร็จ</string>
     <string name="secretKeyTitle">คีย์ลับ</string>
     <string name="enterSecretKeys">ใส่คีย์ลับ</string>

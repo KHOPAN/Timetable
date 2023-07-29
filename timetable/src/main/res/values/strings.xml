@@ -42,6 +42,8 @@
     <string name="syncSuccess">Successfully sync Timetable data</string>
     <string name="update">Update</string>
     <string name="clearTimetable">Clear Timetable</string>
+    <string name="clearTimetableConfirm">Do you want to clear the Timetable data?</string>
+    <string name="ok">OK</string>
     <string name="clearSuccess">Successfully reset Timetable data</string>
     <string name="secretKeyTitle">Secret Key</string>
     <string name="enterSecretKeys">Enter secret keys</string>
