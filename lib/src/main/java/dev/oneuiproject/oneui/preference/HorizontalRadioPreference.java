@@ -98,6 +98,22 @@ public class HorizontalRadioPreference extends Preference {
         setLayoutResource(R.layout.oui_preference_horizontal_radio_layout);
     }
 
+    public void setEntries(CharSequence[] entries) {
+        this.mEntries = entries;
+    }
+
+    public void setEntriesImage(int[] entriesImage) {
+        this.mEntriesImage = entriesImage;
+    }
+
+    public void setEntryValues(CharSequence[] entryValues) {
+        this.mEntryValues = entryValues;
+    }
+
+    public void setType(int type) {
+        this.mType = type;
+    }
+
     @Override
     public void onBindViewHolder(final PreferenceViewHolder holder) {
         super.onBindViewHolder(holder);

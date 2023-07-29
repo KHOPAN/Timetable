@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
@@ -20,13 +22,16 @@ import androidx.preference.PreferenceDataStore;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
+import androidx.preference.SwitchPreference;
 
 import com.khopan.timetable.FragmentInfo;
 import com.khopan.timetable.activity.SyncTimetableActivity;
 import com.khopan.timetable.secret.SecretKeyProcessor;
+import com.khopan.timetable.utils.ThemeUtils;
 import com.khopan.timetable.widgets.EditDateFormatPreference;
 import com.sec.sesl.khopan.timetable.R;
 
+import dev.oneuiproject.oneui.preference.HorizontalRadioPreference;
 import dev.oneuiproject.oneui.widget.Toast;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements FragmentInfo {
@@ -37,12 +42,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 	private SharedPreferences preferences;
 	private SharedPreferencesDataStore dataStore;
 	private String secretKeyValue;
+	private int theme;
 
 	@Override
 	public void onCreatePreferences(Bundle bundle, String rootKey) {
 		Activity activity = this.getActivity();
-		this.preferences = activity.getPreferences(Activity.MODE_PRIVATE);
+		this.preferences = PreferenceManager.getDefaultSharedPreferences(this.context);
 		this.dataStore = new SharedPreferencesDataStore(this.preferences);
+		this.theme = ThemeUtils.getThemePreference(this.context);
 		PreferenceManager manager = this.getPreferenceManager();
 		PreferenceScreen screen = manager.createPreferenceScreen(this.context);
 		PreferenceCategory timeCategory = new PreferenceCategory(this.context);
@@ -62,6 +69,47 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 		dateFormatPreference.setPersistent(true);
 		dateFormatPreference.setOnDateFormatChangeListener(format -> TimetableFragment.DateFormat = format);
 		timeCategory.addPreference(dateFormatPreference);
+		PreferenceCategory themeCategory = new PreferenceCategory(this.context);
+		themeCategory.setTitle("Theme");
+		screen.addPreference(themeCategory);
+		HorizontalRadioPreference themePreference = new HorizontalRadioPreference(this.context, null);
+		themePreference.setKey("theme");
+		themePreference.setTitle("Theme Settings");
+		themePreference.setEntries(new String[] {"Light", "Dark"});
+		themePreference.setEntriesImage(new int[] {R.drawable.display_help_light_mode, R.drawable.display_help_dark_mode});
+		themePreference.setEntryValues(new String[] {"0", "1"});
+		themePreference.setType(0);
+		themePreference.setDividerEnabled(false);
+		themePreference.setTouchEffectEnabled(false);
+		themePreference.setEnabled(this.theme != ThemeUtils.DEFAULT_THEME);
+		themePreference.setValue(ThemeUtils.isLightTheme(this.context) ? "0" : "1");
+		themePreference.setOnPreferenceChangeListener((preference, value) -> {
+			String currentTheme = Integer.toString(ThemeUtils.getThemePreference(this.context));
+
+			if(!currentTheme.equals(value)) {
+				ThemeUtils.setThemePreference((AppCompatActivity) this.requireActivity(), String.valueOf(value).equals("0") ? ThemeUtils.LIGHT_THEME : ThemeUtils.DARK_THEME);
+			}
+
+			return true;
+		});
+
+		themeCategory.addPreference(themePreference);
+		SwitchPreference defaultThemePreference = new SwitchPreference(this.context);
+		defaultThemePreference.setKey("systemTheme");
+		defaultThemePreference.setTitle("System Default");
+		defaultThemePreference.setOnPreferenceChangeListener((preference, value) -> {
+			boolean state = (boolean) value;
+			themePreference.setEnabled(!state);
+
+			if(state) {
+				ThemeUtils.setThemePreference((AppCompatActivity) this.requireActivity(), ThemeUtils.DEFAULT_THEME);
+			}
+
+			return true;
+		});
+
+		themeCategory.addPreference(defaultThemePreference);
+		defaultThemePreference.setChecked(this.theme == ThemeUtils.DEFAULT_THEME);
 		PreferenceCategory timetableCategory = new PreferenceCategory(this.context);
 		timetableCategory.setTitle("Timetable");
 		screen.addPreference(timetableCategory);
