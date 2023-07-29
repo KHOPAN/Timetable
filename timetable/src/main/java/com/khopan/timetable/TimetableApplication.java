@@ -74,7 +74,16 @@ public class TimetableApplication extends AppCompatActivity implements DrawerLis
 		List<Fragment> fragments = this.fragmentManager.getFragments();
 
 		for(int i = 0; i < fragments.size(); i++) {
-			transaction.hide(fragments.get(i));
+			Fragment loopFragment = fragments.get(i);
+			transaction.hide(loopFragment);
+
+			if(loopFragment instanceof FragmentInfo) {
+				if(loopFragment == fragment) {
+					((FragmentInfo) loopFragment).onEntered();
+				} else {
+					((FragmentInfo) loopFragment).onExited();
+				}
+			}
 		}
 
 		transaction.show(fragment);
