@@ -144,7 +144,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 						editor.putInt("vibrateDuration", duration);
 						editor.apply();
 					} catch(Throwable ignored) {
+						int duration = preferences.getInt("vibrateDuration", 0);
 						Toast.makeText(SettingsFragment.this.context, SettingsFragment.this.resources.getString(R.string.integerError), Toast.LENGTH_LONG).show();
+						vibrateDurationPreference.setText(Integer.toString(duration));
+						vibrateDurationPreference.setSummary(duration + "ms");
+						this.flag = false;
 					}
 				}
 			}
