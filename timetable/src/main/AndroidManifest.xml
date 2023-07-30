@@ -59,6 +59,10 @@
             android:name="com.khopan.timetable.activity.SyncTimetableActivity"
             android:exported="true" />
 
+        <activity
+            android:name="com.khopan.timetable.activity.StoryActivity"
+            android:exported="true" />
+
         <receiver
             android:name="com.khopan.timetable.appwidget.TimetableWidgetProvider"
             android:exported="false">

@@ -56,6 +56,8 @@
     <string name="processingSecretError">Error while processing secret key</string>
     <string name="nullResponseGitHub">Error: Null response from GitHub</string>
     <string name="parsingJSONError">Error while parsing JSON</string>
+    <string name="storyText">Secret Story</string>
+    <string name="loading">Loading</string>
     <!-- End Settings Fragment -->
 
     <!-- Edit Timetable Fragment -->

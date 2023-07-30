@@ -1,7 +1,6 @@
 package com.khopan.timetable.activity;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;

@@ -56,6 +56,8 @@
     <string name="processingSecretError">เกิดข้อผิดพลาดขณะประมวลผลคีย์ลับ</string>
     <string name="nullResponseGitHub">ข้อผิดพลาด: การตอบกลับจาก GitHub เป็น Null</string>
     <string name="parsingJSONError">เกิดข้อผิดพลาดขณะประมวล JSON</string>
+    <string name="storyText">เรื่องราวลึกลับ</string>
+    <string name="loading">กำลังโหลด</string>
     <!-- End Settings Fragment -->
 
     <!-- Edit Timetable Fragment -->
