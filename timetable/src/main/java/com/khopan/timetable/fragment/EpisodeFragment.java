@@ -3,6 +3,7 @@ package com.khopan.timetable.fragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.khopan.story.Episode;
 import com.khopan.timetable.utils.SeparatedStringBuilder;
+import com.khopan.timetable.widgets.CardView;
 import com.sec.sesl.khopan.timetable.R;
 
 import java.util.List;
@@ -59,7 +61,7 @@ public class EpisodeFragment extends Fragment {
 
 		Episode episode = Episode.deserialize(node);
 		TextView contentView = view.findViewById(R.id.contentView);
-		TextView additional = view.findViewById(R.id.additional);
+		CardView additional = view.findViewById(R.id.additional);
 		contentView.setText(episode.content().get());
 		List<String> additionalInformation = episode.additionalInformationList();
 		SeparatedStringBuilder builder = new SeparatedStringBuilder();
@@ -69,6 +71,12 @@ public class EpisodeFragment extends Fragment {
 			builder.append(additionalInformation.get(i));
 		}
 
-		additional.setText(builder.toString());
+		additional.setTitleText(builder.toString());
+		float tenScalablePixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 10.0f, this.resources.getDisplayMetrics());
+		additional.titleTextView.setLineSpacing(tenScalablePixel, 1.0f);
+		ViewGroup.MarginLayoutParams margin = (ViewGroup.MarginLayoutParams) additional.titleTextView.getLayoutParams();
+		int intPixel = Math.round(tenScalablePixel);
+		margin.topMargin = intPixel;
+		margin.bottomMargin = intPixel;
 	}
 }
