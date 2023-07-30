@@ -51,6 +51,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 	static DateFormat DateFormat;
 
 	private Activity activity;
+	private SharedPreferences preferences;
 	private Resources resources;
 	private long lastTime;
 	private Vibrator vibrator;
@@ -74,6 +75,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 	public void onAttach(@NonNull Context context) {
 		super.onAttach(context);
 		this.activity = this.requireActivity();
+		this.preferences = PreferenceManager.getDefaultSharedPreferences(this.activity);
 		this.resources = this.activity.getResources();
 		this.vibrator = this.activity.getSystemService(Vibrator.class);
 
@@ -142,7 +144,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 		manager.notify(1523, builder.build());
 
 		if(this.vibrator != null) {
-			this.vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+			this.vibrator.vibrate(VibrationEffect.createOneShot(this.preferences.getInt("vibrateDuration", 500), VibrationEffect.DEFAULT_AMPLITUDE));
 		}
 	}
 
@@ -273,7 +275,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 		boolean notify;
 		String content;
 
-		if(!currentSubjectText.equals(TimetableService.LastCurrentSubjectText)) {
+		if(!currentSubjectText.equals(TimetableService.LastCurrentSubjectText) && this.preferences.getBoolean("vibrateEnable", true)) {
 			TimetableService.LastCurrentSubjectText = currentSubjectText;
 			SeparatedStringBuilder builder = new SeparatedStringBuilder();
 			builder.setSeparateText("\n");

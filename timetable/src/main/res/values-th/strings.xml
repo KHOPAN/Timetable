@@ -39,6 +39,10 @@
     <string name="lightTheme">สว่าง</string>
     <string name="darkTheme">มืด</string>
     <string name="defaultTheme">ตามระบบ</string>
+    <string name="notification">การแจ้งเตีอน</string>
+    <string name="vibrate">การสั่น</string>
+    <string name="vibrateDuration">ระยะเวลาการสั่น</string>
+    <string name="integerError">กรุณาใส่เฉพาะตัวเลขจำนวนเต็ม</string>
     <string name="syncTimetable">ซิงค์ข้อมูลตารางเรียน</string>
     <string name="fetchGitHub">กำลังดึงข้อมูลจาก GitHub</string>
     <string name="errorFetching">เกิดข้อผิดพลาดขณะดึงข้อมูลจาก GitHub</string>

@@ -39,6 +39,10 @@
     <string name="lightTheme">Light</string>
     <string name="darkTheme">Dark</string>
     <string name="defaultTheme">System Default</string>
+    <string name="notification">Notification</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="vibrateDuration">Vibrate Duration</string>
+    <string name="integerError">Only integer is allowed</string>
     <string name="syncTimetable">Sync Timetable</string>
     <string name="fetchGitHub">Fetching data from GitHub</string>
     <string name="errorFetching">Error while fetching data from GitHub</string>

@@ -105,6 +105,63 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 
 		themeCategory.addPreference(defaultThemePreference);
 		defaultThemePreference.setChecked(theme == ThemeUtils.DEFAULT_THEME);
+		PreferenceCategory notificationCategory = new PreferenceCategory(this.context);
+		notificationCategory.setTitle(this.resources.getString(R.string.notification));
+		screen.addPreference(notificationCategory);
+		SwitchPreference vibratePreference = new SwitchPreference(this.context);
+		vibratePreference.setKey("vibrateEnable");
+		vibratePreference.setTitle(this.resources.getString(R.string.vibrate));
+		vibratePreference.setDefaultValue(true);
+		notificationCategory.addPreference(vibratePreference);
+		EditTextPreference vibrateDurationPreference = new EditTextPreference(this.context);
+
+		if(!preferences.contains("vibrateDuration")) {
+			SharedPreferences.Editor editor = preferences.edit();
+			editor.putInt("vibrateDuration", 500);
+			editor.apply();
+		}
+
+		vibrateDurationPreference.setPreferenceDataStore(new PreferenceDataStore() {
+			private boolean flag;
+
+			@Override
+			public String getString(String key, @Nullable String defaultValue) {
+				return Integer.toString(preferences.getInt("vibrateDuration", 0));
+			}
+
+			@Override
+			public void putString(String key, String value) {
+				if(this.flag) {
+					this.flag = false;
+				} else {
+					this.flag = true;
+
+					try {
+						int duration = Integer.parseInt(value);
+						vibrateDurationPreference.setText(Integer.toString(duration));
+						vibrateDurationPreference.setSummary(duration + "ms");
+						SharedPreferences.Editor editor = preferences.edit();
+						editor.putInt("vibrateDuration", duration);
+						editor.apply();
+					} catch(Throwable ignored) {
+						Toast.makeText(SettingsFragment.this.context, SettingsFragment.this.resources.getString(R.string.integerError), Toast.LENGTH_LONG).show();
+					}
+				}
+			}
+		});
+
+		vibrateDurationPreference.setKey("vibrateDuration");
+		vibrateDurationPreference.setTitle(this.resources.getString(R.string.vibrateDuration));
+		vibrateDurationPreference.setDialogTitle(this.resources.getString(R.string.vibrateDuration) + ":");
+		vibrateDurationPreference.setSummary(preferences.getInt("vibrateDuration", 0) + "ms");
+		vibrateDurationPreference.setEnabled(vibratePreference.isChecked());
+		notificationCategory.addPreference(vibrateDurationPreference);
+		vibratePreference.setOnPreferenceChangeListener((preference, value) -> {
+			boolean state = (boolean) value;
+			vibrateDurationPreference.setEnabled(state);
+			return true;
+		});
+
 		PreferenceCategory timetableCategory = new PreferenceCategory(this.context);
 		timetableCategory.setTitle(this.resources.getString(R.string.timetable));
 		screen.addPreference(timetableCategory);
