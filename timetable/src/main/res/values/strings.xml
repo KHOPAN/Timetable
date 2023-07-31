@@ -12,6 +12,12 @@
     <!-- Notification -->
     <string name="serviceNotification">Service Notification</string>
     <string name="subjectNotification">Subject Notification</string>
+    <string name="startEndStartTitle">%s start in %dm, %s end in %dm</string>
+    <string name="startEndStart">%s will start in %d minutes and %s will end in %d minutes</string>
+    <string name="startStartTitle">%s start in %dm</string>
+    <string name="startStart">%s will start in %d minutes</string>
+    <string name="endStartTitle">%s end in %dm</string>
+    <string name="endStart">%s will end in %d minutes</string>
     <!-- End Notification -->
 
     <!-- Widget -->
@@ -42,6 +48,11 @@
     <string name="notification">Notification</string>
     <string name="vibrate">Vibrate</string>
     <string name="vibrateDuration">Vibrate Duration</string>
+    <string name="milliseconds">%dms</string>
+    <string name="earlyNotification">Early Notification</string>
+    <string name="startEarly">Start Early</string>
+    <string name="endEarly">End Early</string>
+    <string name="minute">%dm</string>
     <string name="integerError">Only integer is allowed</string>
     <string name="syncTimetable">Sync Timetable</string>
     <string name="fetchGitHub">Fetching data from GitHub</string>

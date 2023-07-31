@@ -12,6 +12,12 @@
     <!-- Notification -->
     <string name="serviceNotification">แจ้งเตือนการทำงานในเบื้องหลัง</string>
     <string name="subjectNotification">แจ้งเตือนวิชาเรียน</string>
+    <string name="startEndStartTitle">%s จะเริ่มใน %d นาที, %s จะจบใน %d นาที</string>
+    <string name="startEndStart">วิชา %s จะเริ่มใน %d นาทีและวิชา %s จะจบใน %d นาที</string>
+    <string name="startStartTitle">%s จะเริ่มใน %d นาที</string>
+    <string name="startStart">วิชา %s จะเริ่มใน %d นาที</string>
+    <string name="endStartTitle">%s จะจบใน %d นาที</string>
+    <string name="endStart">วิชา %s จะจบใน %d นาที</string>
     <!-- End Notification -->
 
     <!-- Widget -->
@@ -42,6 +48,11 @@
     <string name="notification">การแจ้งเตีอน</string>
     <string name="vibrate">การสั่น</string>
     <string name="vibrateDuration">ระยะเวลาการสั่น</string>
+    <string name="milliseconds">%d มิลลิวินาที</string>
+    <string name="earlyNotification">การแจ้งเตีอนก่อน</string>
+    <string name="startEarly">ก่อนเริ่ม</string>
+    <string name="endEarly">ก่อนหมด</string>
+    <string name="minute">%d นาที</string>
     <string name="integerError">กรุณาใส่เฉพาะตัวเลขจำนวนเต็ม</string>
     <string name="syncTimetable">ซิงค์ข้อมูลตารางเรียน</string>
     <string name="fetchGitHub">กำลังดึงข้อมูลจาก GitHub</string>

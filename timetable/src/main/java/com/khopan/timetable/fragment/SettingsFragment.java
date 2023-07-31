@@ -139,7 +139,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 					try {
 						int duration = Integer.parseInt(value);
 						vibrateDurationPreference.setText(Integer.toString(duration));
-						vibrateDurationPreference.setSummary(duration + "ms");
+						vibrateDurationPreference.setSummary(SettingsFragment.this.resources.getString(R.string.milliseconds, duration));
 						SharedPreferences.Editor editor = preferences.edit();
 						editor.putInt("vibrateDuration", duration);
 						editor.apply();
@@ -147,7 +147,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 						int duration = preferences.getInt("vibrateDuration", 0);
 						Toast.makeText(SettingsFragment.this.context, SettingsFragment.this.resources.getString(R.string.integerError), Toast.LENGTH_LONG).show();
 						vibrateDurationPreference.setText(Integer.toString(duration));
-						vibrateDurationPreference.setSummary(duration + "ms");
+						vibrateDurationPreference.setSummary(SettingsFragment.this.resources.getString(R.string.milliseconds, duration));
 						this.flag = false;
 					}
 				}
@@ -157,7 +157,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 		vibrateDurationPreference.setKey("vibrateDuration");
 		vibrateDurationPreference.setTitle(this.resources.getString(R.string.vibrateDuration));
 		vibrateDurationPreference.setDialogTitle(this.resources.getString(R.string.vibrateDuration) + ":");
-		vibrateDurationPreference.setSummary(preferences.getInt("vibrateDuration", 0) + "ms");
+		vibrateDurationPreference.setSummary(this.resources.getString(R.string.milliseconds, preferences.getInt("vibrateDuration", 0)));
 		vibrateDurationPreference.setEnabled(vibratePreference.isChecked());
 		notificationCategory.addPreference(vibrateDurationPreference);
 		vibratePreference.setOnPreferenceChangeListener((preference, value) -> {
@@ -166,6 +166,101 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Fragme
 			return true;
 		});
 
+		PreferenceCategory earlyNotificationCategory = new PreferenceCategory(this.context);
+		earlyNotificationCategory.setTitle(this.resources.getString(R.string.earlyNotification));
+		screen.addPreference(earlyNotificationCategory);
+		EditTextPreference startEarlyPreference = new EditTextPreference(this.context);
+
+		if(!preferences.contains("startEarlyNotificationTime")) {
+			SharedPreferences.Editor editor = preferences.edit();
+			editor.putInt("startEarlyNotificationTime", 3);
+			editor.apply();
+		}
+
+		startEarlyPreference.setPreferenceDataStore(new PreferenceDataStore() {
+			private boolean flag;
+
+			@Override
+			public String getString(String key, @Nullable String defaultValue) {
+				return Integer.toString(preferences.getInt("startEarlyNotificationTime", 3));
+			}
+
+			@Override
+			public void putString(String key, String value) {
+				if(this.flag) {
+					this.flag = false;
+				} else {
+					this.flag = true;
+
+					try {
+						int time = Integer.parseInt(value);
+						startEarlyPreference.setText(Integer.toString(time));
+						startEarlyPreference.setSummary(SettingsFragment.this.resources.getString(R.string.minute, time));
+						SharedPreferences.Editor editor = preferences.edit();
+						editor.putInt("startEarlyNotificationTime", time);
+						editor.apply();
+					} catch(Throwable ignored) {
+						int time = preferences.getInt("startEarlyNotificationTime", 0);
+						Toast.makeText(SettingsFragment.this.context, SettingsFragment.this.resources.getString(R.string.integerError), Toast.LENGTH_LONG).show();
+						startEarlyPreference.setText(Integer.toString(time));
+						startEarlyPreference.setSummary(SettingsFragment.this.resources.getString(R.string.minute, time));
+						this.flag = false;
+					}
+				}
+			}
+		});
+
+		startEarlyPreference.setKey("startEarlyTime");
+		startEarlyPreference.setTitle(this.resources.getString(R.string.startEarly));
+		startEarlyPreference.setDialogTitle(this.resources.getString(R.string.startEarly) + ":");
+		startEarlyPreference.setSummary(this.resources.getString(R.string.minute, preferences.getInt("startEarlyNotificationTime", 3)));
+		earlyNotificationCategory.addPreference(startEarlyPreference);
+		EditTextPreference endEarlyPreference = new EditTextPreference(this.context);
+
+		if(!preferences.contains("endEarlyNotificationTime")) {
+			SharedPreferences.Editor editor = preferences.edit();
+			editor.putInt("endEarlyNotificationTime", 3);
+			editor.apply();
+		}
+
+		endEarlyPreference.setPreferenceDataStore(new PreferenceDataStore() {
+			private boolean flag;
+
+			@Override
+			public String getString(String key, @Nullable String defaultValue) {
+				return Integer.toString(preferences.getInt("endEarlyNotificationTime", 3));
+			}
+
+			@Override
+			public void putString(String key, String value) {
+				if(this.flag) {
+					this.flag = false;
+				} else {
+					this.flag = true;
+
+					try {
+						int time = Integer.parseInt(value);
+						endEarlyPreference.setText(Integer.toString(time));
+						endEarlyPreference.setSummary(SettingsFragment.this.resources.getString(R.string.minute, time));
+						SharedPreferences.Editor editor = preferences.edit();
+						editor.putInt("endEarlyNotificationTime", time);
+						editor.apply();
+					} catch(Throwable ignored) {
+						int time = preferences.getInt("endEarlyNotificationTime", 0);
+						Toast.makeText(SettingsFragment.this.context, SettingsFragment.this.resources.getString(R.string.integerError), Toast.LENGTH_LONG).show();
+						endEarlyPreference.setText(Integer.toString(time));
+						endEarlyPreference.setSummary(SettingsFragment.this.resources.getString(R.string.minute, time));
+						this.flag = false;
+					}
+				}
+			}
+		});
+
+		endEarlyPreference.setKey("endEarlyTime");
+		endEarlyPreference.setTitle(this.resources.getString(R.string.endEarly));
+		endEarlyPreference.setDialogTitle(this.resources.getString(R.string.endEarly) + ":");
+		endEarlyPreference.setSummary(this.resources.getString(R.string.minute, preferences.getInt("endEarlyNotificationTime", 3)));
+		earlyNotificationCategory.addPreference(endEarlyPreference);
 		PreferenceCategory timetableCategory = new PreferenceCategory(this.context);
 		timetableCategory.setTitle(this.resources.getString(R.string.timetable));
 		screen.addPreference(timetableCategory);

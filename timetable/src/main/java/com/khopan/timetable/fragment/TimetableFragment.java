@@ -197,9 +197,26 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 
 								if(this.isTimeWithinIntervals(subject.startTimeHour, subject.startTimeMinute, subject.endTimeHour, subject.endTimeMinute, hour, minute)) {
 									currentSubjectList.add(subject);
+									int seconds = (hour * 60 + minute) * 60 + calendar.get(Calendar.SECOND);
+									String startText = "";
+									int startIn = 0;
+									String endText = "";
+									int endIn = 0;
 
 									if(i != subjectList.subjectList.length - 1) {
-										nextSubjectList.add(subjectList.subjectList[i + 1]);
+										Subject nextSubject = subjectList.subjectList[i + 1];
+										nextSubjectList.add(nextSubject);
+
+										int startTimeEarly = this.preferences.getInt("startEarlyNotificationTime", 3);
+										int start = ((nextSubject.startTimeHour * 60) + nextSubject.startTimeMinute) * 60;
+
+										for(int t = 0; t <= startTimeEarly; t++) {
+											if(start == seconds + t * 60) {
+												startText = list.dataList[nextSubject.subjectDataIndex].subjectName;
+												startIn = t;
+												break;
+											}
+										}
 									} else {
 										nextSubjectList.add(null);
 									}
@@ -208,6 +225,40 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 										previousSubjectList.add(subjectList.subjectList[i - 1]);
 									} else {
 										previousSubjectList.add(null);
+									}
+
+									int endTimeEarly = this.preferences.getInt("endEarlyNotificationTime", 3);
+									int end = ((subject.endTimeHour * 60) + subject.endTimeMinute) * 60;
+
+									for(int t = 0; t <= endTimeEarly; t++) {
+										if(end == seconds + t * 60) {
+											endText = list.dataList[subject.subjectDataIndex].subjectName;
+											endIn = t;
+											break;
+										}
+									}
+
+									boolean endState = endText != null && !endText.isEmpty() && endIn != 0;
+									String title = null;
+									String text = null;
+
+									if(startText != null && !startText.isEmpty() && startIn != 0) {
+										if(endState) {
+											title = this.resources.getString(R.string.startEndStartTitle, startText, startIn, endText, endIn);
+											text = this.resources.getString(R.string.startEndStart, startText, startIn, endText, endIn);
+										} else {
+											title = this.resources.getString(R.string.startStartTitle, startText, startIn);
+											text = this.resources.getString(R.string.startStart, startText, startIn);
+										}
+									} else {
+										if(endState) {
+											title = this.resources.getString(R.string.endStartTitle, endText, endIn);
+											text = this.resources.getString(R.string.endStart, endText, endIn);
+										}
+									}
+
+									if(text != null) {
+										this.notify(title, text);
 									}
 								}
 							}
@@ -405,9 +456,12 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 		}
 	}
 
-	private boolean isTimeWithinIntervals(int hour1, int minute1, int hour2, int minute2, int checkHour, int checkMinute) {
-		int checkMinutes = checkHour * 60 + checkMinute;
+	private boolean isTimeWithinIntervals(int hour1, int minute1, int hour2, int minute2, int checkMinutes) {
 		return checkMinutes >= hour1 * 60 + minute1 && checkMinutes <= hour2 * 60 + minute2;
+	}
+
+	private boolean isTimeWithinIntervals(int hour1, int minute1, int hour2, int minute2, int checkHour, int checkMinute) {
+		return this.isTimeWithinIntervals(hour1, minute1, hour2, minute2, checkHour * 60 + checkMinute);
 	}
 
 	@Override
