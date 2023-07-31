@@ -307,6 +307,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 						teacherBuilder.append(teacher);
 					}
 
+					currentSubjectTeacherBuilder.setAddBrace(subjectList.size() > 1 && data.teacherList.length > 1);
 					currentSubjectTeacherBuilder.append(teacherBuilder);
 				} else {
 					currentSubjectTeacherBuilder.append(this.resources.getString(R.string.noneText));
@@ -404,6 +405,7 @@ public class TimetableFragment extends BaseFragment implements FragmentInfo {
 							teacherBuilder.append(teacher);
 						}
 
+						subjectTeacherBuilder.setAddBrace(subjectList.size() > 1 && data.teacherList.length > 1);
 						subjectTeacherBuilder.append(teacherBuilder);
 					} else {
 						subjectTeacherBuilder.append(this.resources.getString(R.string.noneText));
