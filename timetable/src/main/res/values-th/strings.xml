@@ -3,6 +3,7 @@
     tools:ignore="MissingTranslation">
     <!-- Application Information -->
     <string name="app_name">ตารางเรียน</string>
+    <string name="version">เวอร์ชั่น %s หมายเลขบิวด์ %s</string>
     <!-- End Application Information -->
 
     <!-- Service -->
@@ -23,6 +24,18 @@
     <!-- Widget -->
     <string name="subjectPreview">แสดงวิชาเรียน</string>
     <!-- End Widget -->
+
+    <!-- About Timetable -->
+    <string name="iconDescription">ไอคอนแอพตารางเรียน</string>
+    <string name="aboutTimetable">เกี่ยวกับตารางเรียน</string>
+    <string name="developer">ผู้พัฒนา</string>
+    <string name="featureDesigner">ผู้ออกแบบฟีเจอร์</string>
+    <string name="teamMembers">สมาชิกในทีม</string>
+    <string name="licenses">ลายเซ็น</string>
+    <string name="loadingLicense">กำลังโหลดลายเซ็น</string>
+    <string name="viewOnGitHub">แสดงบน GitHub</string>
+    <string name="errorUrl">เกิดข้อผิดพลาดขณะเปิดลิงค์: %s</string>
+    <!-- End About Timetable -->
 
     <!-- Subject Fragment -->
     <string name="timetable">ตารางเรียน</string>

@@ -61,8 +61,9 @@ public class EpisodeFragment extends Fragment {
 
 		Episode episode = Episode.deserialize(node);
 		TextView contentView = view.findViewById(R.id.contentView);
-		CardView additional = view.findViewById(R.id.additional);
 		contentView.setText(episode.content().get());
+		contentView.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 23.0f, this.resources.getDisplayMetrics()));
+		CardView additional = view.findViewById(R.id.additional);
 		List<String> additionalInformation = episode.additionalInformationList();
 		SeparatedStringBuilder builder = new SeparatedStringBuilder();
 		builder.setSeparateText("\n");

@@ -52,16 +52,24 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.khopan.timetable.activity.AboutActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.khopan.timetable.activity.LicenseActivity"
+            android:exported="false" />
+
+        <activity
             android:name="com.khopan.timetable.settings.FragmentSettingsActivity"
-            android:exported="true" />
+            android:exported="false" />
 
         <activity
             android:name="com.khopan.timetable.activity.SyncTimetableActivity"
-            android:exported="true" />
+            android:exported="false" />
 
         <activity
             android:name="com.khopan.timetable.activity.StoryActivity"
-            android:exported="true" />
+            android:exported="false" />
 
         <receiver
             android:name="com.khopan.timetable.appwidget.TimetableWidgetProvider"

@@ -25,7 +25,6 @@
                 android:id="@+id/contentView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="23sp"
                 android:textColor="@color/oui_primary_text_color"
                 android:gravity="start"
                 android:lineSpacingExtra="10sp"

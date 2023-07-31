@@ -3,6 +3,7 @@
     tools:ignore="MissingTranslation">
     <!-- Application Information -->
     <string name="app_name">Timetable</string>
+    <string name="version">Version %s Build %s</string>
     <!-- End Application Information -->
 
     <!-- Service -->
@@ -23,6 +24,18 @@
     <!-- Widget -->
     <string name="subjectPreview">Subject Preview</string>
     <!-- End Widget -->
+
+    <!-- About Timetable -->
+    <string name="iconDescription">Timetable Icon</string>
+    <string name="aboutTimetable">About Timetable</string>
+    <string name="developer">Developer</string>
+    <string name="featureDesigner">Feature Designer</string>
+    <string name="teamMembers">Team Members</string>
+    <string name="licenses">Licenses</string>
+    <string name="loadingLicense">Loading License</string>
+    <string name="viewOnGitHub">View on GitHub</string>
+    <string name="errorUrl">Error opening url: %s</string>
+    <!-- End About Timetable -->
 
     <!-- Subject Fragment -->
     <string name="timetable">Timetable</string>

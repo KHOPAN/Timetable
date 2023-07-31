@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.khopan.timetable.activity.AboutActivity;
 import com.khopan.timetable.fragment.EditSubjectFragment;
 import com.khopan.timetable.fragment.EditTimetableFragment;
 import com.khopan.timetable.fragment.SettingsFragment;
@@ -51,11 +52,11 @@ public class TimetableApplication extends AppCompatActivity implements DrawerLis
 		this.fragmentDrawerList.add(null);
 		this.fragmentDrawerList.add(this.fragmentList.get(2));
 		this.fragmentDrawerList.add(this.fragmentList.get(3));
+		this.binding.drawerLayout.setDrawerButtonIcon(this.getDrawable(R.drawable.ic_oui_info_outline));
+		this.binding.drawerLayout.setDrawerButtonOnClickListener(view -> this.startActivity(new Intent(this, AboutActivity.class)));
 		this.binding.drawerListView.setLayoutManager(new LinearLayoutManager(this));
 		this.binding.drawerListView.setAdapter(new DrawerListAdapter(this, this.fragmentDrawerList, this));
-		this.binding.drawerListView.setItemAnimator(null);
 		this.binding.drawerListView.setHasFixedSize(true);
-		this.binding.drawerListView.seslSetLastRoundedCorner(false);
 		this.fragmentManager = this.getSupportFragmentManager();
 		FragmentTransaction transaction = this.fragmentManager.beginTransaction();
 
