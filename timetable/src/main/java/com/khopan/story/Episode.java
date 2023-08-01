@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.khopan.property.Property;
 import com.khopan.property.SimpleProperty;
+import com.khopan.property.state.SimpleState;
+import com.khopan.property.state.State;
 
 public class Episode {
 	private final List<String> additionalInformationList;
@@ -17,6 +19,7 @@ public class Episode {
 	private String title;
 	private String name;
 	private String content;
+	private boolean wip;
 
 	private Episode() {
 		this.additionalInformationList = new ArrayList<>();
@@ -32,6 +35,10 @@ public class Episode {
 
 	public Property<String, Episode> content() {
 		return new SimpleProperty<>(() -> this.content, content -> this.content = content, this).nullable().whenNull("");
+	}
+
+	public State<Episode> wip() {
+		return new SimpleState<>(() -> this.wip, wip -> this.wip = wip, this);
 	}
 
 	public Episode format() {
@@ -101,6 +108,7 @@ public class Episode {
 		episodeNode.put("title", episode.title);
 		episodeNode.put("name", episode.name);
 		episodeNode.put("content", episode.content);
+		episodeNode.put("wip", episode.wip);
 
 		if(episode.additionalInformationList.size() > 0) {
 			ArrayNode additionalInformationNode = episodeNode.putArray("additional-information");
@@ -132,8 +140,12 @@ public class Episode {
 			episode.content = node.get("content").asText();
 		}
 
+		if(node.has("wip")) {
+			episode.wip = node.get("wip").asBoolean();
+		}
+
 		if(node.has("additional-information")) {
-			for(JsonNode information : node.get("additional-information")) {
+			for(JsonNode information : (ArrayNode) node.get("additional-information")) {
 				episode.additionalInformationList.add(information.asText());
 			}
 		}

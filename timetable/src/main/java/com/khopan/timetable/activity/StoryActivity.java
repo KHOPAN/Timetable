@@ -75,11 +75,19 @@ public class StoryActivity extends AppCompatActivity {
 				for(Episode episode : season.episodeList()) {
 					Preference episodePreference = new Preference(this.context);
 					episodePreference.setTitle(episode.name().get());
-					episodePreference.setSummary(episode.title().get());
+					StringBuilder summary = new StringBuilder();
+					summary.append(episode.title().get());
+
+					if(episode.wip().getState()) {
+						summary.append(" (WIP)");
+						episodePreference.seslSetSummaryColor(0xFFAA0000);
+					}
+
+					episodePreference.setSummary(summary.toString());
 					episodePreference.setOnPreferenceClickListener(preference -> {
 						Bundle extras = new Bundle();
 						extras.putString("episode", Episode.serialize(episode).toString());
-						return FragmentSettingsActivity.start(this, FragmentTitle.title(episode.title().get(), episode.name().get()), EpisodeFragment.class, extras);
+						return FragmentSettingsActivity.start(this, FragmentTitle.title(episode.title().get(), episode.name().get()), EpisodeFragment.class, extras, false);
 					});
 
 					category.addPreference(episodePreference);
