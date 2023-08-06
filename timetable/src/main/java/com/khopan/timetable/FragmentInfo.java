@@ -7,4 +7,8 @@ public interface FragmentInfo {
 
 	default void onEntered() {}
 	default void onExited() {}
+
+	default boolean onBackPressed() {
+		return false;
+	}
 }

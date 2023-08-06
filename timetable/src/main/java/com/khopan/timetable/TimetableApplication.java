@@ -29,6 +29,7 @@ public class TimetableApplication extends AppCompatActivity implements DrawerLis
 	private TimetableLayoutBinding binding;
 	private Resources resources;
 	private FragmentManager fragmentManager;
+	private Fragment fragment;
 
 	public TimetableApplication() {
 		this.fragmentList = new ArrayList<>();
@@ -70,7 +71,7 @@ public class TimetableApplication extends AppCompatActivity implements DrawerLis
 	}
 
 	public void setFragment(int fragmentIndex) {
-		Fragment fragment = this.fragmentList.get(fragmentIndex);
+		this.fragment = this.fragmentList.get(fragmentIndex);
 		FragmentTransaction transaction = this.fragmentManager.beginTransaction();
 		List<Fragment> fragments = this.fragmentManager.getFragments();
 
@@ -79,7 +80,7 @@ public class TimetableApplication extends AppCompatActivity implements DrawerLis
 			transaction.hide(loopFragment);
 
 			if(loopFragment instanceof FragmentInfo) {
-				if(loopFragment == fragment) {
+				if(loopFragment == this.fragment) {
 					((FragmentInfo) loopFragment).onEntered();
 				} else {
 					((FragmentInfo) loopFragment).onExited();
@@ -87,11 +88,11 @@ public class TimetableApplication extends AppCompatActivity implements DrawerLis
 			}
 		}
 
-		transaction.show(fragment);
+		transaction.show(this.fragment);
 		transaction.commit();
 
-		if(fragment instanceof FragmentInfo) {
-			FragmentInfo info = (FragmentInfo) fragment;
+		if(this.fragment instanceof FragmentInfo) {
+			FragmentInfo info = (FragmentInfo) this.fragment;
 			String title = info.getTitle();
 			this.binding.drawerLayout.setTitle(this.resources.getString(R.string.app_name), title);
 			this.binding.drawerLayout.setExpandedSubtitle(title);
@@ -104,5 +105,54 @@ public class TimetableApplication extends AppCompatActivity implements DrawerLis
 	public boolean onDrawerItemSelected(int position) {
 		this.setFragment(this.fragmentList.indexOf(this.fragmentDrawerList.get(position)));
 		return true;
+	}
+
+	@Override
+	public void onBackPressed() {
+		if(this.fragment == null || (this.fragment instanceof FragmentInfo && !(((FragmentInfo) this.fragment).onBackPressed()))) {
+			super.onBackPressed();
+		}
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		this.binding.drawerLayout.setDrawerOpen(true, false);
+		this.binding.drawerLayout.setDrawerOpen(false, false);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		this.binding.drawerLayout.setDrawerOpen(true, false);
+		this.binding.drawerLayout.setDrawerOpen(false, false);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		this.binding.drawerLayout.setDrawerOpen(true, false);
+		this.binding.drawerLayout.setDrawerOpen(false, false);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		this.binding.drawerLayout.setDrawerOpen(true, false);
+		this.binding.drawerLayout.setDrawerOpen(false, false);
+	}
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		this.binding.drawerLayout.setDrawerOpen(true, false);
+		this.binding.drawerLayout.setDrawerOpen(false, false);
+	}
+
+	@Override
+	protected void onPostResume() {
+		super.onPostResume();
+		this.binding.drawerLayout.setDrawerOpen(true, false);
+		this.binding.drawerLayout.setDrawerOpen(false, false);
 	}
 }

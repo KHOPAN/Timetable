@@ -110,6 +110,8 @@
 
     <!-- Edit Subject Fragment -->
     <string name="editSubject">แก้ไขวิชา</string>
+    <string name="allSubject">ทุกวิชา</string>
+    <string name="deleteSubject">ลบ</string>
     <string name="subjectName">ชื่อวิชา</string>
     <string name="subjectIdentifier">รหัสวิชา</string>
     <string name="teachers">ครูผู้สอน</string>

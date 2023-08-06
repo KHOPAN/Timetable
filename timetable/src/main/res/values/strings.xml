@@ -110,6 +110,8 @@
 
     <!-- Edit Subject Fragment -->
     <string name="editSubject">Edit Subject</string>
+    <string name="allSubject">All Subjects</string>
+    <string name="deleteSubject">Delete</string>
     <string name="subjectName">Subject Name</string>
     <string name="subjectIdentifier">Subject Identifier</string>
     <string name="teachers">Teachers</string>
