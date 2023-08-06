@@ -1018,6 +1018,11 @@ public class ToolbarLayout extends LinearLayout {
                 a.recycle();
             }
         }
+
+        // KHOPAN: Impossibility Fix
+        public ToolbarLayoutParams(int width, int height) {
+            super(width, height);
+        }
     }
 
     private CoordinatorLayout.LayoutParams CLLPWrapper(LayoutParams oldLp) {
