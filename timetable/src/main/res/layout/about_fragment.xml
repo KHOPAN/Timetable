@@ -53,42 +53,6 @@
         <dev.oneuiproject.oneui.widget.Separator
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/developer" />
-
-        <dev.oneuiproject.oneui.widget.RoundLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/oui_background_color"
-            android:orientation="vertical">
-            <com.khopan.timetable.widgets.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:IconDrawable="@drawable/profile_khopan"
-                app:TitleText="KHOPAN"
-                app:SummaryText="Puthip Nakchan" />
-
-        </dev.oneuiproject.oneui.widget.RoundLinearLayout>
-        <dev.oneuiproject.oneui.widget.Separator
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/featureDesigner" />
-
-        <dev.oneuiproject.oneui.widget.RoundLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/oui_background_color"
-            android:orientation="vertical">
-            <com.khopan.timetable.widgets.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:IconDrawable="@drawable/profile_poonpun"
-                app:TitleText="Poonpun"
-                app:SummaryText="Thee Punpom" />
-
-        </dev.oneuiproject.oneui.widget.RoundLinearLayout>
-        <dev.oneuiproject.oneui.widget.Separator
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:text="@string/teamMembers" />
 
         <dev.oneuiproject.oneui.widget.RoundLinearLayout
@@ -103,11 +67,27 @@
                 app:IconDrawable="@drawable/profile_who" />
 
             <com.khopan.timetable.widgets.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:IconDrawable="@drawable/profile_khopan"
+                app:TitleText="KHOPAN"
+                app:SummaryText="Puthip Nakchan"
+                app:isDividerViewVisible="true" />
+
+            <com.khopan.timetable.widgets.CardView
                 android:id="@+id/whoTwo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isDividerViewVisible="true"
                 app:IconDrawable="@drawable/profile_who" />
+
+            <com.khopan.timetable.widgets.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:IconDrawable="@drawable/profile_poonpun"
+                app:TitleText="Poonpun"
+                app:SummaryText="Thee Punpom"
+                app:isDividerViewVisible="true" />
 
         </dev.oneuiproject.oneui.widget.RoundLinearLayout>
         <dev.oneuiproject.oneui.widget.Separator

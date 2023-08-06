@@ -28,8 +28,6 @@
     <!-- About Timetable -->
     <string name="iconDescription">ไอคอนแอพตารางเรียน</string>
     <string name="aboutTimetable">เกี่ยวกับตารางเรียน</string>
-    <string name="developer">ผู้พัฒนา</string>
-    <string name="featureDesigner">ผู้ออกแบบฟีเจอร์</string>
     <string name="teamMembers">สมาชิกในทีม</string>
     <string name="licenses">ลายเซ็น</string>
     <string name="loadingLicense">กำลังโหลดลายเซ็น</string>
