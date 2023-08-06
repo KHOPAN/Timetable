@@ -33,7 +33,16 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+       debug {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -48,14 +57,11 @@ dependencies {
     implementation("io.github.oneuiproject.sesl:appcompat:$sesl_appcompat_version")
     implementation("io.github.oneuiproject.sesl:material:$sesl_material_version")
     implementation("io.github.oneuiproject.sesl:picker-basic:$sesl_picker_basic_version")
-    implementation("io.github.oneuiproject.sesl:picker-color:$sesl_picker_color_version")
     implementation("io.github.oneuiproject.sesl:preference:$sesl_preference_version")
     implementation("io.github.oneuiproject.sesl:recyclerview:$sesl_recyclerview_version")
     implementation("androidx.constraintlayout:constraintlayout:$androidx_constraintlayout_version")
-    implementation("com.airbnb.android:lottie:5.2.0")
     implementation("io.github.oneuiproject:icons:1.1.0")
     implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
-    implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.2")
     implementation project(path: ":lib")
 }
